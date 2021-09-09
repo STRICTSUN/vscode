@@ -38,7 +38,9 @@
 			"origin",
 			"orientation",
 			"context"
-		], // non-complete list of globals that are easy to access unintentionally
+		],
+		//Неполный список глобальных объектов, к которым легко получить
+		//доступ непреднамеренно.
 		"no-var": "warn",
 		"jsdoc/no-types": "warn",
 		"semi": "off",
@@ -91,7 +93,7 @@
 		"code-import-patterns": [
 			"warn",
 			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			// !!! Do not relax these rules !!!
+			// !!! Не ослабляйте эти правила !!!
 			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			{
 				"target": "**/vs/base/common/**",
@@ -132,7 +134,8 @@
 				"restrictions": [
 					"vs/nls",
 					"**/vs/base/{common,node}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -170,7 +173,8 @@
 					"vs/nls",
 					"**/vs/base/{common,node}/**",
 					"**/vs/base/parts/*/{common,node}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -189,7 +193,8 @@
 					"vs/css!./**/*",
 					"**/vs/base/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/base/parts/*/{common,browser,node,electron-sandbox,electron-browser}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -198,7 +203,8 @@
 					"vs/nls",
 					"**/vs/base/{common,node,electron-main}/**",
 					"**/vs/base/parts/*/{common,node,electron-main}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -255,7 +261,8 @@
 					"**/vs/base/{common,node}/**",
 					"**/vs/base/parts/*/{common,node}/**",
 					"**/vs/platform/*/{common,node}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -276,7 +283,8 @@
 					"**/vs/base/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/base/parts/*/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/platform/*/{common,browser,node,electron-sandbox,electron-browser}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -286,7 +294,8 @@
 					"**/vs/base/{common,node,electron-main}/**",
 					"**/vs/base/parts/*/{common,node,electron-main}/**",
 					"**/vs/platform/*/{common,node,electron-main}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -455,7 +464,8 @@
 					"**/vs/base/parts/*/{common,browser}/**",
 					"**/vs/platform/*/{common,browser}/**",
 					"**/vs/editor/{common,browser}/**",
-					"**/vs/editor/contrib/**", // editor/contrib is equivalent to /browser/ by convention
+					"**/vs/editor/contrib/**",
+					// editor/contrib по соглашению эквивалнтен /browser/.
 					"**/vs/workbench/workbench.web.api",
 					"**/vs/workbench/{common,browser}/**",
 					"**/vs/workbench/services/*/{common,browser}/**",
@@ -494,7 +504,8 @@
 					"**/vs/base/parts/*/{common,browser,electron-sandbox}/**",
 					"**/vs/platform/*/{common,browser,electron-sandbox}/**",
 					"**/vs/editor/{common,browser,electron-sandbox}/**",
-					"**/vs/editor/contrib/**", // editor/contrib is equivalent to /browser/ by convention
+					"**/vs/editor/contrib/**",
+					//editor/contrib по соглашению эквивалнтен /browser/.
 					"**/vs/workbench/{common,browser,electron-sandbox}/**",
 					"**/vs/workbench/api/{common,browser,electron-sandbox}/**",
 					"**/vs/workbench/services/*/{common,browser,electron-sandbox}/**"
@@ -509,11 +520,13 @@
 					"**/vs/base/parts/*/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/platform/*/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/editor/{common,browser,node,electron-sandbox,electron-browser}/**",
-					"**/vs/editor/contrib/**", // editor/contrib is equivalent to /browser/ by convention
+					"**/vs/editor/contrib/**",
+					// editor/contrib по соглашению эквивалнтен /browser/.
 					"**/vs/workbench/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/workbench/api/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/workbench/services/*/{common,browser,node,electron-sandbox,electron-browser}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -528,7 +541,8 @@
 					"vs/workbench/contrib/files/browser/editors/fileEditorInput",
 					"**/vs/workbench/services/**",
 					"**/vs/workbench/test/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -592,7 +606,8 @@
 					"**/vs/workbench/{common,node}/**",
 					"**/vs/workbench/api/{common,node}/**",
 					"**/vs/workbench/services/**/{common,node}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -623,7 +638,8 @@
 					"**/vs/workbench/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/workbench/api/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/workbench/services/**/{common,browser,node,electron-sandbox,electron-browser}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -645,7 +661,7 @@
 			{
 				"target": "**/vs/workbench/contrib/terminal/browser/**",
 				"restrictions": [
-					// xterm and its addons are strictly browser-only components
+					// xterm и его надстройки являются строго браузерными компонентами.
 					"xterm",
 					"xterm-addon-*",
 					"vs/nls",
@@ -742,7 +758,8 @@
 					"**/vs/workbench/api/{common,node}/**",
 					"**/vs/workbench/services/**/{common,node}/**",
 					"**/vs/workbench/contrib/**/{common,node}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // node modules
 				]
 			},
 			{
@@ -775,7 +792,8 @@
 					"**/vs/workbench/api/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/workbench/services/**/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/workbench/contrib/**/{common,browser,node,electron-sandbox,electron-browser}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // node modules
 				]
 			},
 			{
@@ -798,7 +816,8 @@
 					"**/vs/base/parts/**/{common,node}/**",
 					"**/vs/platform/**/{common,node}/**",
 					"**/vs/code/**/{common,node}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -810,7 +829,8 @@
 					"**/vs/base/parts/**/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/platform/**/{common,browser,node,electron-sandbox,electron-browser}/**",
 					"**/vs/code/**/{common,browser,node,electron-sandbox,electron-browser}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -821,7 +841,8 @@
 					"**/vs/base/parts/**/{common,node,electron-main}/**",
 					"**/vs/platform/**/{common,node,electron-main}/**",
 					"**/vs/code/**/{common,node,electron-main}/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -833,7 +854,8 @@
 					"**/vs/platform/**/{common,node}/**",
 					"**/vs/workbench/**/{common,node}/**",
 					"**/vs/server/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -904,28 +926,32 @@
 				"target": "**/test/smoke/**",
 				"restrictions": [
 					"**/test/smoke/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
 				"target": "**/test/automation/**",
 				"restrictions": [
 					"**/test/automation/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
 				"target": "**/test/integration/**",
 				"restrictions": [
 					"**/test/integration/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
 				"target": "**/test/monaco/**",
 				"restrictions": [
 					"**/test/monaco/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -943,21 +969,24 @@
 				"target": "**/{node,electron-browser,electron-main}/**/*.test.ts",
 				"restrictions": [
 					"**/vs/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
 				"target": "**/{node,electron-browser,electron-main}/**/test/**",
 				"restrictions": [
 					"**/vs/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
 				"target": "**/test/{node,electron-browser,electron-main}/**",
 				"restrictions": [
 					"**/vs/**",
-					"@vscode/*", "*" // node modules
+					"@vscode/*",
+					"*" // Модули узлов.
 				]
 			},
 			{
@@ -1077,7 +1106,7 @@
 			],
 			"rules": {
 				"header/header": [
-					// hygiene.js still checks that all files (even those in this directory) are MIT licensed.
+					// hygiene.js по-прежнему проверяет, что все файлы - даже в этом каталоге, имеют лицензию MIT.
 					"off"
 				]
 			}

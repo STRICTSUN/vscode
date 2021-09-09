@@ -1,105 +1,106 @@
-# Contributing to VS Code
+2021 © Перевод АЕКовалёв aek.ally@gmail.com
+               Без оборота на меня  Without backing up to me
 
-Welcome, and thank you for your interest in contributing to VS Code!
+# Содействие Студии Визуального Кода
 
-There are many ways in which you can contribute, beyond writing code. The goal of this document is to provide a high-level overview of how you can get involved.
+Добро пожаловать и благодарим вас за интерес к участию в Студии Визуального Кода!
 
-## Asking Questions
+Есть много способов, которыми вы можете внести свой вклад, помимо написания кода. Цель этого документа - дать общий обзор того, как вы можете принять участие.
 
-Have a question? Rather than opening an issue, please ask away on [Stack Overflow](https://stackoverflow.com/questions/tagged/vscode) using the tag `vscode`.
+## Спрашивать
 
-The active community will be eager to assist you. Your well-worded question will serve as a resource to others searching for help.
+У вас есть вопрос? Вместо того, чтобы начинать проблему, пожалуйста, спросите об этом на [Stack Overflow](https://stackoverflow.com/questions/tagged/vscode) используя тег `vscode`.
 
-## Providing Feedback
+Сообщество активно будет готово помочь вам. Ваш хорошо сформулированный вопрос послужит подспорьем для тех, кто ищет помощи.
 
-Your comments and feedback are welcome, and the development team is available via a handful of different channels.
+## Предоставление обратной связи
 
-See the [Feedback Channels](https://github.com/microsoft/vscode/wiki/Feedback-Channels) wiki page for details on how to share your thoughts.
+Ваши комментарии и отзывы приветствуются и доступ к команде разработчиков возможен по нескольким различным каналам.
 
-## Reporting Issues
+Смотрите вики-страницу [Каналы обратной связи](https://github.com/microsoft/vscode/wiki/Feedback-Channels) для получения подробной информации о том, как поделиться своими мыслями.
 
-Have you identified a reproducible problem in VS Code? Have a feature request? We want to hear about it! Here's how you can make reporting your issue as effective as possible.
+## Сообщения о проблемах
 
-### Identify Where to Report
+Вы выявили воспроизводимую проблему в Студии Визуального Кода? У вас есть запрос на функцию? Мы хотим услышать об этом! Вот как вы можете сделать сообщение о своей проблеме максимально эффективным.
 
-The VS Code project is distributed across multiple repositories. Try to file the issue against the correct repository. Check the list of [Related Projects](https://github.com/microsoft/vscode/wiki/Related-Projects) if you aren't sure which repo is correct.
+### Определитесь, куда следует сообщать
 
-Can you recreate the issue even after [disabling all extensions](https://code.visualstudio.com/docs/editor/extension-gallery#_disable-an-extension)? If you find the issue is caused by an extension you have installed, please file an issue on the extension's repo directly.
+ПроектСтудия Визуального Кода распределён по нескольким хранилищам. Попробуйте зарегистрировать проблему в правильном хранилище. Ознакомьтесь со списком [Связанных проектов](https://github.com/microsoft/vscode/wiki/Related-Projects) если вы не уверены, какое хранилище является подходящим.
 
-### Look For an Existing Issue
+Можете ли вы воссоздать проблему даже после [отключения всех расширений](https://code.visualstudio.com/docs/editor/extension-gallery#_disable-an-extension)? Если вы обнаружите, что проблема вызвана установленным вами расширением, пожалуйста, отправьте сообщение о проблеме непосредственно в хранилище расширения.
 
-Before you create a new issue, please do a search in [open issues](https://github.com/microsoft/vscode/issues) to see if the issue or feature request has already been filed.
+### Определите существующую проблему
 
-Be sure to scan through the [most popular](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc) feature requests.
+Прежде чем создавать новую проблему, пожалуйста, выполните поиск в [открытые проблемы](https://github.com/microsoft/vscode/issues) чтобы узнать, был ли уже подан запрос на такую же проблему или функцию.
 
-If you find your issue already exists, make relevant comments and add your [reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments). Use a reaction in place of a "+1" comment:
+Обязательно просмотрите [самые популярные](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc) запросы функций.
 
-* 👍 - upvote
-* 👎 - downvote
+Если вы обнаружите, что ваша проблема уже существует, сделайте соответствующие комментарии и добавьте свой [отклик](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments). Используйте отклик вместо комментария "+1" :
+* 👍 - проголосовать за
+* 👎 - проголосовать против
 
-If you cannot find an existing issue that describes your bug or feature, create a new issue using the guidelines below.
+Если вы не можете найти существующую проблему, которая описывает вашу ошибку или функцию, создайте новую проблему, используя приведенные ниже рекомендации.
 
-### Writing Good Bug Reports and Feature Requests
+### Написание Правильных Отчетов об ошибках и запросов функций
 
-File a single issue per problem and feature request. Do not enumerate multiple bugs or feature requests in the same issue.
+Укажите один вопрос для каждой проблемы и запроса функции. Не перечисляйте несколько ошибок или запросов функций в одной и той же проблеме.
 
-Do not add your issue as a comment to an existing issue unless it's for the identical input. Many issues look similar, but have different causes.
+Не добавляйте свою проблему в качестве комментария к существующей проблеме, если только она не относится к идентичным входным данным. Многие проблемы похожи, но имеют разные причины.
 
-The more information you can provide, the more likely someone will be successful at reproducing the issue and finding a fix.
+Чем больше информации вы сможете предоставить, тем больше вероятность того, что кому-то удастся воспроизвести проблему и найти решение.
 
-The built-in tool for reporting an issue, which you can access by using `Report Issue` in VS Code's Help menu, can help streamline this process by automatically providing the version of VS Code, all your installed extensions, and your system info. Additionally, the tool will search among existing issues to see if a similar issue already exists.
+Встроенный инструмент для сообщения о проблеме, к которому вы можете получить доступ с помощью "Сообщить о проблеме" в меню справки Студии Визуального Кода, может помочь упростить этот процесс, автоматически предоставляя версию Студии Визуального Кода, все установленные расширения и информацию о вашей системе. Кроме того, инструмент выполнит поиск среди существующих проблем, чтобы узнать, существует ли уже аналогичная проблема.
 
-Please include the following with each issue:
+Пожалуйста, включайте следующее в каждый вопрос:
 
-* Version of VS Code
+* Версия Студии Визуального Кода.
 
-* Your operating system
+* Ваша операционная система.
 
-* List of extensions that you have installed
+* Список установленных вами расширений.
 
-* Reproducible steps (1... 2... 3...) that cause the issue
+* Воспроизводимые шаги (1... 2... 3...), которые вызывают проблему.
 
-* What you expected to see, versus what you actually saw
+* То, что вы ожидали увидеть, по сравнению с тем, что вы увидели на самом деле.
 
-* Images, animations, or a link to a video showing the issue occurring
+* Изображения, анимация или ссылка на видео, демонстрирующее возникшую проблему.
 
-* A code snippet that demonstrates the issue or a link to a code repository the developers can easily pull down to recreate the issue locally
+* Фрагмент кода, демонстрирующий проблему или ссылка на репозиторий кода, который разработчики могут легко извлечь, чтобы воссоздать проблему локально.
 
-  * **Note:** Because the developers need to copy and paste the code snippet, including a code snippet as a media file (i.e. .gif) is not sufficient.
+  * **Обратите внимание:** Поскольку разработчикам необходимо скопировать и вставить фрагмент кода, включение фрагмента кода в виде мультимедийного файла (например .gif) - недостаточно.
 
-* Errors from the Dev Tools Console (open from the menu: Help > Toggle Developer Tools)
+* Ошибки в консоли инструментов разработчика - открыть в меню: Справка > Переключить инструменты разработчика.
 
-### Final Checklist
+### Окончательный контрольный список
 
-Please remember to do the following:
+Не забудьте сделать следующее:
 
-* [ ] Search the issue repository to ensure your report is a new issue
+* [ ] Выполните поиск в репозитории проблем, чтобы убедиться, что ваш отчет является новой проблемой.
 
-* [ ] Recreate the issue after disabling all extensions
+* [ ] Повторите проблему после отключения всех расширений.
 
-* [ ] Simplify your code around the issue to better isolate the problem
+* [ ] Упростите свой код вокруг проблемы, чтобы лучше выделить проблему.
 
-Don't feel bad if the developers can't reproduce the issue right away. They will simply ask for more information!
+Не расстраивайтесь, если разработчики не могут сразу воспроизвести проблему. Они просто попросят дополнительную информацию!
 
-### Follow Your Issue
+### Следите за своей проблемой
 
-Once submitted, your report will go into the [issue tracking](https://github.com/microsoft/vscode/wiki/Issue-Tracking) workflow. Be sure to understand what will happen next, so you know what to expect, and how to continue to assist throughout the process.
+После отправки ваш отчет будет направлен в раздел [отслеживание проблем](https://github.com/microsoft/vscode/wiki/Issue-Tracking) делопроизводства. Убедитесь, что вы понимаете, что будет дальше, чтобы вы знали, чего ожидать и как продолжать оказывать помощь на протяжении всего процесса.
 
-## Automated Issue Management
+## Автоматизированное управление проблемами
 
-We use GitHub Actions to help us manage issues. These Actions and their descriptions can be [viewed here](https://github.com/microsoft/vscode-github-triage-actions). Some examples of what these Actions do are:
+Мы используем GitHub Actions, чтобы помочь нам управлять проблемами. Эти Действия и их описание можно [посмотреть здесь](https://github.com/microsoft/vscode-github-triage-actions). Вот несколько примеров того, что делают эти Действия:
 
-* Automatically closes any issue marked `needs-more-info` if there has been no response in the past 7 days.
-* Automatically lock issues 45 days after they are closed.
-* Automatically implement the VS Code [feature request pipeline](https://github.com/microsoft/vscode/wiki/Issues-Triaging#managing-feature-requests).
+* Автоматически закрывает любую проблему с пометкой "требуется дополнительная информация", если в течение последних 7 дней не было ответа.
+* Автоматическая блокировка проблем через 45 дней после их закрытия.
+* Автоматическая реализация Студии Визуального Кода [конвейер запроса функций](https://github.com/microsoft/vscode/wiki/Issues-Triaging#managing-feature-requests).
 
-If you believe the bot got something wrong, please open a new issue and let us know.
+Если вы считаете, что бот сделал что-то не так, пожалуйста, откройте новую проблему и сообщите нам об этом.
 
-## Contributing Fixes
+## Внесение исправлений
 
-If you are interested in writing code to fix issues,
-please see [How to Contribute](https://github.com/microsoft/vscode/wiki/How-to-Contribute) in the wiki.
+Если вы заинтересованы в написании кода для устранения проблем, пожалуйста, ознакомьтесьв вики  с [Как внести свой вклад](https://github.com/microsoft/vscode/wiki/How-to-Contribute).
 
-# Thank You!
+# Спасибо!
 
-Your contributions to open source, large or small, make great projects like this possible. Thank you for taking the time to contribute.
+Ваш вклад в открытый исходный код, большой или маленький, делает возможными такие замечательные проекты, как этот. Спасибо, что нашли время внести свой вклад.

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-# This file expands the cache.tar file in the image that contains the results of "prepare.sh"
-# on top of the source tree. It runs as a postCreateCommand which runs after the container/codespace
-# is already up where you would typically run a command like "yarn install".
+# Этот файл расширяет файл cache.tar в образе, который содержит результаты "prepare.sh" поверх исходного дерева.
+#  Он запускается как команда postCreateCommand, которая выполняется после того, как контейнер/кодовое пространство уже запущено, где вы обычно выполняете команду типа "yarn install".
 
 set -e
 
@@ -10,7 +9,7 @@ SOURCE_FOLDER="$(cd "${1:-"."}" && pwd)"
 CACHE_FOLDER="${2:-"/usr/local/etc/devcontainer-cache"}"
 
 if [ ! -d "${CACHE_FOLDER}" ]; then
-	echo "No cache folder found."
+	echo "Не найдена папка кэша."
 	exit 0
 fi
 
@@ -18,5 +17,5 @@ echo "[$(date)] Expanding $(du -h "${CACHE_FOLDER}/cache.tar") file to ${SOURCE_
 cd "${SOURCE_FOLDER}"
 tar -xf "${CACHE_FOLDER}/cache.tar"
 rm -f "${CACHE_FOLDER}/cache.tar"
-echo "[$(date)] Done!"
+echo "[$(date)] Готово!"
 

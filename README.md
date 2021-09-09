@@ -1,75 +1,78 @@
-# Visual Studio Code - Open Source ("Code - OSS")
+/*
+ * 2021 © Перевод [АЕКовалёв](aek.ally@gmail.com)
+ *             Без оборота на меня 
+ */
+# Студия Визуального Кода - С открытым исходным кодом "Code - OSS"
 [![Feature Requests](https://img.shields.io/github/issues/microsoft/vscode/feature-request.svg)](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc)
 [![Bugs](https://img.shields.io/github/issues/microsoft/vscode/bug.svg)](https://github.com/microsoft/vscode/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Abug)
 [![Gitter](https://img.shields.io/badge/chat-on%20gitter-yellow.svg)](https://gitter.im/Microsoft/vscode)
 
-## The Repository
+## Репозиторий
 
-This repository ("`Code - OSS`") is where we (Microsoft) develop the [Visual Studio Code](https://code.visualstudio.com) product together with the community. Not only do we work on code and issues here, we also publish our [roadmap](https://github.com/microsoft/vscode/wiki/Roadmap), [monthly iteration plans](https://github.com/microsoft/vscode/wiki/Iteration-Plans), and our [endgame plans](https://github.com/microsoft/vscode/wiki/Running-the-Endgame). This source code is available to everyone under the standard [MIT license](https://github.com/microsoft/vscode/blob/main/LICENSE.txt).
+В этом репозитории ("`Code - OSS`") мы - Microsoft, разрабатываем продукт [Студия Визуального Кода](https://code.visualstudio.com) вместе с сообществом. Здесь мы не только работаем над кодом и проблемами, мы также публикуем нашу [дорожную карту](https://github.com/microsoft/vscode/wiki/Roadmap), [ежемесячные планы](https://github.com/microsoft/vscode/wiki/Iteration-Plans) и наши [планы на окончание](https://github.com/microsoft/vscode/wiki/Running-the-Endgame). Этот исходный код доступен каждому в соответствии со стандартной лицензией [MIT license](https://github.com/microsoft/vscode/blob/main/LICENSE.txt).
 
-## Visual Studio Code
+## Студия Визуального Кода
 
 <p align="center">
   <img alt="VS Code in action" src="https://user-images.githubusercontent.com/35271042/118224532-3842c400-b438-11eb-923d-a5f66fa6785a.png">
 </p>
 
-[Visual Studio Code](https://code.visualstudio.com) is a distribution of the `Code - OSS` repository with Microsoft specific customizations released under a traditional [Microsoft product license](https://code.visualstudio.com/License/).
+[Студия Визуального Кода](https://code.visualstudio.com) представляет собой дистрибутив репозитория 'Code - OSS' с конкретными настройками Microsoft, выпущенный под традиционной [лицензией на продукт Microsoft](https://code.visualstudio.com/License/).
 
-[Visual Studio Code](https://code.visualstudio.com) combines the simplicity of a code editor with what developers need for their core edit-build-debug cycle. It provides comprehensive code editing, navigation, and understanding support along with lightweight debugging, a rich extensibility model, and lightweight integration with existing tools.
+[Студия Визуального Кода](https://code.visualstudio.com) сочетает в себе простоту редактора кода с тем, что нужно разработчикам для их основного цикла редактирования-сборки-отладки. Она обеспечивает всестороннюю поддержку редактирования кода, навигации и понимания, а также легкую отладку, богатую модель расширяемости и легкую интеграцию с существующими инструментами.
 
-Visual Studio Code is updated monthly with new features and bug fixes. You can download it for Windows, macOS, and Linux on [Visual Studio Code's website](https://code.visualstudio.com/Download). To get the latest releases every day, install the [Insiders build](https://code.visualstudio.com/insiders).
+Студия Визуального Кода ежемесячно обновляется новыми функциями и исправлениями ошибок. Вы можете скачать его для Windows, macOS и Linux на веб-сайте [Студия Визуального Кода](https://code.visualstudio.com/Download). Чтобы получать последние версии каждый день, установите сборку [Insiders](https://code.visualstudio.com/insiders).
 
-## Contributing
+## Содействие
 
-There are many ways in which you can participate in this project, for example:
+Есть много способов принять участие в проекте, например:
 
-* [Submit bugs and feature requests](https://github.com/microsoft/vscode/issues), and help us verify as they are checked in
-* Review [source code changes](https://github.com/microsoft/vscode/pulls)
-* Review the [documentation](https://github.com/microsoft/vscode-docs) and make pull requests for anything from typos to additional and new content
+* [Отправляйте сообщения об ошибках и запросы функций](https://github.com/microsoft/vscode/issues) и помогайте нам проверять, как они регистрируются.
+* Просмотрите [Изменения исходного кода](https://github.com/microsoft/vscode/pulls)
+* Просмотрите [Документацию](https://github.com/microsoft/vscode-docs) и делайте запросы на перенос для чего угодно, от опечаток до нового контента.
 
-If you are interested in fixing issues and contributing directly to the code base,
-please see the document [How to Contribute](https://github.com/microsoft/vscode/wiki/How-to-Contribute), which covers the following:
+Если вы заинтересованы в устранении проблем и внесении непосредственного вклада в базу кода, смотрите документ [Как внести свой вклад](https://github.com/microsoft/vscode/wiki/How-to-Contribute), который охватывает следующее:
 
-* [How to build and run from source](https://github.com/microsoft/vscode/wiki/How-to-Contribute)
-* [The development workflow, including debugging and running tests](https://github.com/microsoft/vscode/wiki/How-to-Contribute#debugging)
-* [Coding guidelines](https://github.com/microsoft/vscode/wiki/Coding-Guidelines)
-* [Submitting pull requests](https://github.com/microsoft/vscode/wiki/How-to-Contribute#pull-requests)
-* [Finding an issue to work on](https://github.com/microsoft/vscode/wiki/How-to-Contribute#where-to-contribute)
-* [Contributing to translations](https://aka.ms/vscodeloc)
+* [Как собрать и запустить из исходного кода](https://github.com/microsoft/vscode/wiki/How-to-Contribute)
+* [Рабочий процесс разработки, включая отладку и запуск тестов](https://github.com/microsoft/vscode/wiki/How-to-Contribute#debugging)
+* [Рекомендации по кодированию](https://github.com/microsoft/vscode/wiki/Coding-Guidelines)
+* [Отправка запросов на перенос](https://github.com/microsoft/vscode/wiki/How-to-Contribute#pull-requests)
+* [Поиск проблем по работе](https://github.com/microsoft/vscode/wiki/How-to-Contribute#where-to-contribute)
+* [Содействие переводам](https://aka.ms/vscodeloc)
 
-## Feedback
+## Обратная связь
 
-* Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/vscode)
-* [Request a new feature](CONTRIBUTING.md)
-* Upvote [popular feature requests](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc)
-* [File an issue](https://github.com/microsoft/vscode/issues)
-* Follow [@code](https://twitter.com/code) and let us know what you think!
+* Задайте вопрос на [Stack Overflow](https://stackoverflow.com/questions/tagged/vscode)
+* [Запросите новую функцию](CONTRIBUTING.md)
+* Голосуйте за [популярные запросы функций](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc)
+* [Сообщите о проблеме](https://github.com/microsoft/vscode/issues)
+* Следуйте [@code](https://twitter.com/code) и дайте нам знать, что вы думаете!
 
-See our [wiki](https://github.com/microsoft/vscode/wiki/Feedback-Channels) for a description of each of these channels and information on some other available community-driven channels.
+Смотрите наши [wiki](https://github.com/microsoft/vscode/wiki/Feedback-Channels) с описанием каждого из этих каналов и информацию о некоторых других доступных каналах сообщества.
 
-## Related Projects
+## Связанные проекты
 
-Many of the core components and extensions to VS Code live in their own repositories on GitHub. For example, the [node debug adapter](https://github.com/microsoft/vscode-node-debug) and the [mono debug adapter](https://github.com/microsoft/vscode-mono-debug) have their own repositories. For a complete list, please visit the [Related Projects](https://github.com/microsoft/vscode/wiki/Related-Projects) page on our [wiki](https://github.com/microsoft/vscode/wiki).
+Многие из основных компонентов и расширений VS Code находятся в собственных репозиториях на GitHub. К примеру, [адаптер отладки узла](https://github.com/microsoft/vscode-node-debug) и [отладочный адаптер моно](https://github.com/microsoft/vscode-mono-debug) имеют свои собственные хранилища. Для получения полного списка, пожалуйста, посетите страницу [Связанные проекты](https://github.com/microsoft/vscode/wiki/Related-Projects) страницу на нашем [wiki](https://github.com/microsoft/vscode/wiki).
 
-## Bundled Extensions
+## Связанные расширения
 
-VS Code includes a set of built-in extensions located in the [extensions](extensions) folder, including grammars and snippets for many languages. Extensions that provide rich language support (code completion, Go to Definition) for a language have the suffix `language-features`. For example, the `json` extension provides coloring for `JSON` and the `json-language-features` provides rich language support for `JSON`.
+Студия Визуального Кода содержит набор встроенных расширений, расположенных в папке [extensions](extensions) , включая грамматики и фрагменты для многих языков. Расширения, обеспечивающие богатую языковую поддержку - завершение кода, переход к определению, для языка имеют суффикс  `language-features`. Например, расширение `json` обеспечивает раскраску для `JSON` , а `json-language-features` обеспечивает богатую языковую поддержку для `JSON`.
 
-## Development Container
+## Контейнер для разработки
 
-This repository includes a Visual Studio Code Remote - Containers / GitHub Codespaces development container.
+Этот репозиторий включает контейнер для удалённой разработки Студии Визуального Кода - Containers / GitHub Codespaces .
 
-- For [Remote - Containers](https://aka.ms/vscode-remote/download/containers), use the **Remote-Containers: Clone Repository in Container Volume...** command which creates a Docker volume for better disk I/O on macOS and Windows.
-- For Codespaces, install the [Github Codespaces](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces) extension in VS Code, and use the **Codespaces: Create New Codespace** command.
+- Для [Контейнеры - Удалённо](https://aka.ms/vscode-remote/download/containers), используйте команду **Remote-Containers: Clone Repository in Container Volume...** которая создаёт том Docker для улучшения дискового ввода-вывода в macOS и Windows.
+- Для Codespaces установите расширение [Github Codespaces](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces) в Студии Визуального Кода и используйте команду **Codespaces: Create New Codespace** .
 
-Docker / the Codespace should have at least **4 Cores and 6 GB of RAM (8 GB recommended)** to run full build. See the [development container README](.devcontainer/README.md) for more information.
+Docker/Codespace должен иметь как минимум **4 ядра и 6 ГБ ОЗУ - рекомендуется 8 ГБ** для запуска полной сборки. Смотрите [README контейнера разработки](.devcontainer/README.md) для получения дополнительной информации..
 
-## Code of Conduct
+## Нормы поведения
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+В этом проекте принят [Кодекс поведения Microsoft для проектов с открытым исходным кодом](https://opensource.microsoft.com/codeofconduct/). Для получения дополнительной информации смотрите [Часто задаваемые вопросы о Кодексе поведения](https://opensource.microsoft.com/codeofconduct/faq/) или свяжитесь с [opencode@microsoft.com](mailto:opencode@microsoft.com) по любым дополнительным вопросам или комментариям.
 
-## License
+## Лицензия
 
 Copyright (c) Microsoft Corporation. All rights reserved.
 
-Licensed under the [MIT](LICENSE.txt) license.
+Лицензировано в соответствии с лицензией [MIT](LICENSE.txt) license.

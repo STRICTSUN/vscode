@@ -18,6 +18,6 @@
 **/extensions/**/dist/**
 **/extensions/typescript-language-features/test-workspace/**
 
-# These files are not linted by `yarn eslint`, so we exclude them from being linted in the editor.
-# This ensures that if we add new rules and they pass CI, there are also no errors in the editor.
+# Эти файлы не линтируются с помощью `yarn eslint`, поэтому мы исключаем их  линтирование в редакторе.
+# Это гарантирует, что если мы добавим новые правила и они пройдут CI, в редакторе также не будет ошибок.
 /resources/web/code-web.js

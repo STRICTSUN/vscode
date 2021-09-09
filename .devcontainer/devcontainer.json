@@ -1,10 +1,10 @@
 {
 	"name": "Code - OSS",
 
-	// Image contents: https://github.com/microsoft/vscode-dev-containers/blob/master/repository-containers/images/github.com/microsoft/vscode/.devcontainer/base.Dockerfile
+	// Контент образа: https://github.com/microsoft/vscode-dev-containers/blob/master/repository-containers/images/github.com/microsoft/vscode/.devcontainer/base.Dockerfile
 	"image": "mcr.microsoft.com/vscode/devcontainers/repos/microsoft/vscode:branch-main",
 	"overrideCommand": false,
-	"runArgs": [ "--init", "--security-opt", "seccomp=unconfined"],
+	"runArgs": [ "--init", "--security-opt", "seccomp=unconfined" ],
 
 	"settings": {
 		"resmon.show.battery": false,
@@ -12,7 +12,7 @@
 	},
 
 	// noVNC, VNC
-	"forwardPorts": [6080, 5901],
+	"forwardPorts": [ 6080, 5901 ],
 	"portsAttributes": {
 		"6080": {
 			"label": "VNC web client (noVNC)",
@@ -29,7 +29,7 @@
 		"mutantdino.resourcemonitor"
 	],
 
-	// Optionally loads a cached yarn install for the repo
+	// По желанию загружает кэшированную установку yarn для данного репозитория.
 	"postCreateCommand": ".devcontainer/cache/restore-diff.sh && sudo chown node:node /workspaces",
 
 	"remoteUser": "node",

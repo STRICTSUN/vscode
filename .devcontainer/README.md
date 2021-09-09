@@ -1,101 +1,105 @@
-# Code - OSS Development Container
+2021 © Перевод [AEKALLY](aek.ally@outlook.com)
+       Без оборота на меня Without backing up to me
 
-This repository includes configuration for a development container for working with Code - OSS in a local container or using [GitHub Codespaces](https://github.com/features/codespaces).
+# Code - OSS.
+# Контейнер разработки.
 
-> **Tip:** The default VNC password is `vscode`. The VNC server runs on port `5901` and a web client is available on port `6080`.
+Этот хранилище включает конфигурацию для контейнера разработки для работы с Code - OSS в локальном контейнере или с использованием [Кодовых пространств GitHub](https://github.com/features/codespaces).
 
-## Quick start - local
+> **Совет:** Пароль VNC по умолчанию - `vscode`. Сервер VNC работает на порту `5901`, а веб-клиент доступен на порту `6080`.
 
-1. Install Docker Desktop or Docker for Linux on your local machine. (See [docs](https://aka.ms/vscode-remote/containers/getting-started) for additional details.)
+## Быстрое начало - локально.
 
-2. **Important**: Docker needs at least **4 Cores and 6 GB of RAM (8 GB recommended)** to run a full build. If you are on macOS, or are using the old Hyper-V engine for Windows, update these values for Docker Desktop by right-clicking on the Docker status bar item and going to **Preferences/Settings > Resources > Advanced**.
+1. Установите Docker Desktop или Docker для Linux на локальной машине. Смотрите [документацию](https://aka.ms/vscode-remote/containers/getting-started) .
 
-    > **Note:** The [Resource Monitor](https://marketplace.visualstudio.com/items?itemName=mutantdino.resourcemonitor) extension is included in the container so you can keep an eye on CPU/Memory in the status bar.
+2. **Важно**: Для запуска полной сборки Docker требуется не менее **4 ядер и 6 ГБ оперативной памяти - рекомендуется 8 ГБ**. Если вы работаете на macOS или используете старый движок Hyper-V для Windows, обновите эти значения для Docker Desktop, щелкнув правой кнопкой мыши на элементе строки состояния Docker и перейдя к **Параметры/Настройки > Ресурсы > Дополнительно**.
 
-3. Install [Visual Studio Code Stable](https://code.visualstudio.com/) or [Insiders](https://code.visualstudio.com/insiders/) and the [Remote - Containers](https://aka.ms/vscode-remote/download/containers) extension.
+    > **Внимание:** Расширение [Монитор ресурсов](https://marketplace.visualstudio.com/items?itemName=mutantdino.resourcemonitor) включено в контейнер, чтобы вы могли следить за процессором/памятью в строке состояния.
+
+3. Установите [Студия Визуального Кода Стабильная](https://code.visualstudio.com/) или [Insiders](https://code.visualstudio.com/insiders/) и расширение [Удалённо - Контейнеры](https://aka.ms/vscode-remote/download/containers).
 
     ![Image of Remote - Containers extension](https://microsoft.github.io/vscode-remote-release/images/remote-containers-extn.png)
 
-    > **Note:** The Remote - Containers extension requires the Visual Studio Code distribution of Code - OSS. See the [FAQ](https://aka.ms/vscode-remote/faq/license) for details.
+    > **Внимание:** Для расширения Удаленно - Контейнеры требуется дистрибутив Code - OSS для Студии Визуального Кода. Подробности смотрите на [Часто Задаваемые Вопросы](https://aka.ms/vscode-remote/faq/license) .
 
-4. Press <kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> or <kbd>F1</kbd> and select **Remote-Containers: Clone Repository in Container Volume...**.
+4. Нажмите <kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> или <kbd>F1</kbd> и выберите  ** Удаленно - Контейнеры: Клонировать храниище на том контейнера ...Remote-Containers: Clone Repository in Container Volume...**.
 
-    > **Tip:** While you can use your local source tree instead, operations like `yarn install` can be slow on macOS or when using the Hyper-V engine on Windows. We recommend the "clone repository in container" approach instead since it uses "named volume" rather than the local filesystem.
+    > **Совет:** Хотя вместо этого можно использовать локальное дерево исходников, такие операции, как `yarn install`, могут быть медленными на macOS или при использовании механизма Hyper-V на Windows. Мы рекомендуем использовать подход "клонирование хранилища в контейнере", поскольку он использует "именованный том", а не локальную файловую систему.
 
-5. Type `https://github.com/microsoft/vscode` (or a branch or PR URL) in the input box and press <kbd>Enter</kbd>.
+5. Наберите `https://github.com/microsoft/vscode` (или branch или PR URL) в поле ввода и нажмите<kbd>Enter</kbd>.
 
-6. After the container is running, open a web browser and go to [http://localhost:6080](http://localhost:6080), or use a [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/) to connect to `localhost:5901` and enter `vscode` as the password.
+6. После запуска контейнера откройте веб-браузер и перейдите в [http://localhost:6080](http://localhost:6080) или используйте [Просмотрщик VNC](https://www.realvnc.com/en/connect/download/viewer/) для подключения к `localhost:5901` и введите `vscode` как пароль.
 
-Anything you start in VS Code, or the integrated terminal, will appear here.
+Всё, что вы запускаете в Студии Визуального Кода или встроенном терминале, будет отображаться здесь.
 
-Next: **[Try it out!](#try-it)**
+Далее: **[Попробуйте!](#try-it)**
 
-## Quick start - GitHub Codespaces
+## Быстрый старт - Пространства кодов GitHub.
 
-1. From the [microsoft/vscode GitHub repository](https://github.com/microsoft/vscode), click on the **Code** dropdown, select **Open with Codespaces**, and then click on **New codespace**. If prompted, select the **Standard** machine size (which is also the default).
+1. Из хранилища [microsoft/vscode GitHub](https://github.com/microsoft/vscode), нажмите на выпадающий список **Код**, выберите **Открыть с помощью кодовых пространств**, а затем нажмите **Новое кодовое пространство**. При появлении запроса выберите **Стандартный** размер машины - который также используется по умолчанию.
 
-   > **Note:** You will not see these options within GitHub if you are not in the Codespaces beta.
+   > **Внимание:** Вы не увидите этих опций в GitHub, если вы не являетесь участником бета-версии Codespaces.
 
-2. After the codespace is up and running in your browser, press <kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> or <kbd>F1</kbd> and select **Ports: Focus on Ports View**.
+2. После того как кодовое пространство будет запущено в вашем браузере, нажмите кнопку <kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> или <kbd>F1</kbd> и выберите **Порты: фокус на виде портов**.
 
-3. You should see **VNC web client (6080)** under in the list of ports. Select the line and click on the globe icon to open it in a browser tab.
+3. В списке портов вы должны увидеть **VNC web client (6080)**. Выберите строку и нажмите на значок глобуса, чтобы открыть её во вкладке браузера.
 
-    > **Tip:** If you do not see the port, <kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> or <kbd>F1</kbd>, select **Forward a Port** and enter port `6080`.
+    > **Совет:** Если порт не отображается, <kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> или <kbd>F1</kbd>, выберите **Форсировать порт** и введите порт `6080`.
 
-4. In the new tab, you should see noVNC. Click **Connect** and enter `vscode` as the password.
+4. В новой вкладке вы должны увидеть noVNC. Нажмите **Подключиться** и введите `vscode` в качестве пароля.
 
-Anything you start in VS Code, or the integrated terminal, will appear here.
+Все, что вы запускаете в Студии Визуального Кода или встроенном терминале, будет отображаться здесь.
 
-Next: **[Try it out!](#try-it)**
+Далее: **[Попробуйте!](#try-it)**
 
-### Using VS Code with GitHub Codespaces
+### Использование Студии Визуального Кода с кодовыми пространствами GitHub.
 
-You may see improved VNC responsiveness when accessing a codespace from VS Code client since you can use a [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/). Here's how to do it.
+Вы можете увидеть улучшенную реакцию VNC при доступе к кодовому пространству из клиента Студии Визуального Кода, так как вы можете использовать [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/). Вот как это сделать.
 
-1.  Install [Visual Studio Code Stable](https://code.visualstudio.com/) or [Insiders](https://code.visualstudio.com/insiders/) and the the [GitHub Codespaces extension](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces).
+1.  Установите [Студию Визуального Кода Stable](https://code.visualstudio.com/) или [Insiders](https://code.visualstudio.com/insiders/) и [расширение GitHub Codespaces](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces).
 
-	> **Note:** The GitHub Codespaces extension requires the Visual Studio Code distribution of Code - OSS.
+	> **Внимание:** Для расширения GitHub Codespaces требуется дистрибутив Студии Визуального Кода - Code - OSS.
 
-2. After the VS Code is up and running, press <kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> or <kbd>F1</kbd>, choose **Codespaces: Create New Codespace**, and use the following settings:
-    - `microsoft/vscode` for the repository.
-	- Select any branch (e.g. **main**) - you select a different one later.
-	- Choose **Standard** (4-core, 8GB) as the size.
+2. После того как Студия Визуального Кода будет запущена, нажмите кнопку <kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> или <kbd>F1</kbd>, выберите **Кодовые пространства: Создать новое кодовое пространство** и используйте следующие настройки:
+    - `microsoft/vscode` для хранилища.
+	- Выберите любую ветвь (например, **main**) - позже вы выберете другую.
+	- Выберите размер **Standard** (4 ядра, 8 ГБ).
 
-4. After you have connected to the codespace, you can use a [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/) to connect to `localhost:5901` and enter `vscode` as the password.
+4. После подключения к кодовому пространству вы можете использовать функцию [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/) для подключения к `localhost:5901` и введите `vscode` в качестве пароля.
 
-    > **Tip:** You may also need change your VNC client's **Picture Quaility** setting to **High** to get a full color desktop.
+    > **Совет:** Вам также может понадобиться изменить настройку **Качество изображения** в клиенте VNC на **High**, чтобы получить полноцветный рабочий стол..
 
-5. Anything you start in VS Code, or the integrated terminal, will appear here.
+5. Все, что вы запускаете в Студии Визуального Кода или встроенном терминале, будет отображаться здесь.
 
-Next: **[Try it out!](#try-it)**
+Далее: **[Попробуйте!](#try-it)**
 
-## Try it!
+## Попробуйте!
 
-This container uses the [Fluxbox](http://fluxbox.org/) window manager to keep things lean. **Right-click on the desktop** to see menu options. It works with GNOME and GTK applications, so other tools can be installed if needed.
+Этот контейнер использует оконный менеджер [Fluxbox](http://fluxbox.org/) для упрощения работы. ** Щёлкните правой кнопкой мыши на рабочем столе **, чтобы увидеть параметры меню. Он работает с приложениями GNOME и GTK, поэтому при необходимости можно установить другие инструменты.
 
-> **Note:** You can also set the resolution from the command line by typing `set-resolution`.
+> **Внимание:** Вы также можете установить разрешение из командной строки, набрав `set-resolution`.
 
-To start working with Code - OSS, follow these steps:
+Чтобы начать работу с Code - OSS, выполните следующие шаги:
 
-1. In your local VS Code client, open a terminal (<kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>\`</kbd>) and type the following commands:
+1. В локальном клиенте Студии Визуального Кода откройте терминал (<kbd>Ctrl/Cmd</kbd> + <kbd>Shift</kbd> + <kbd>\`</kbd>) и наберите следующие команды:
 
     ```bash
     yarn install
     bash scripts/code.sh
     ```
 
-2. After the build is complete, open a web browser or a [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/) to connect to the desktop environment as described in the quick start and enter `vscode` as the password.
+2. После завершения сборки откройте веб-браузер или программу [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/) для подключения к среде рабочего стола, как описано в кратком руководстве и введите `vscode` в качестве пароля.
 
-3. You should now see Code - OSS!
+3. Теперь вы должны увидеть Code - OSS!
 
-Next, let's try debugging.
+Далее попробуем отладку.
 
-1. Shut down Code - OSS by clicking the box in the upper right corner of the Code - OSS window through your browser or VNC viewer.
+1. Выключите Code - OSS, нажав на флажок в правом верхнем углу окна Code - OSS через браузер или программу просмотра VNC.
 
-2. Go to your local VS Code client, and use the **Run / Debug** view to launch the **VS Code** configuration. (Typically the default, so you can likely just press <kbd>F5</kbd>).
+2. Перейдите в локальный клиент VS Code и используйте представление ** Запуск / Отладка **, чтобы запустить конфигурацию ** VS Code **. Обычно это значение по умолчанию, поэтому вы можете просто нажать <kbd>F5</kbd>.
 
-    > **Note:** If launching times out, you can increase the value of `timeout` in the "VS Code", "Attach Main Process", "Attach Extension Host", and "Attach to Shared Process" configurations in [launch.json](../.vscode/launch.json). However, running `scripts/code.sh` first will set up Electron which will usually solve timeout issues.
+    > **Внимание:** Если запуск происходит с перебоями, вы можете увеличить значение `timeout` в конфигурациях "VS Code", "Attach Main Process", "Attach Extension Host" и "Attach to Shared Process" в [launch.json](../.vscode/launch.json). Однако, запуск `scripts/code.sh` сначала настроит Electron, что обычно решает проблемы с таймаутом.
 
-3. After a bit, Code - OSS will appear with the debugger attached!
+3. Через некоторое время появится Code - OSS с подключенным отладчиком!
 
-Enjoy!
+Наслаждайтесь!

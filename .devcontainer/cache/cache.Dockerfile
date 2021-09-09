@@ -1,7 +1,7 @@
-# This dockerfile is used to build up from a base image to create an image a cache.tar file containing the results of running "prepare.sh".
-# Other image contents: https://github.com/microsoft/vscode-dev-containers/blob/master/repository-containers/images/github.com/microsoft/vscode/.devcontainer/base.Dockerfile
+# Этот файл настройки dockerfile, используется для создания из базового образа, образа файла cache.tar, содержащий результаты выполнения "prepare.sh".
+# Другой контент образа: https://github.com/microsoft/vscode-dev-containers/blob/master/repository-containers/images/github.com/microsoft/vscode/.devcontainer/base.Dockerfile
 
-# This first stage generates cache.tar
+# На первом этапе создается файл cache.tar .
 FROM mcr.microsoft.com/vscode/devcontainers/repos/microsoft/vscode:dev as cache
 ARG USERNAME=node
 COPY --chown=${USERNAME}:${USERNAME} . /repo-source-tmp/
@@ -13,8 +13,8 @@ RUN mkdir /usr/local/etc/devcontainer-cache \
 		&& .devcontainer/prepare.sh \
 		&& .devcontainer/cache/cache-diff.sh"
 
-# This second stage starts fresh and just copies in cache.tar from the previous stage. The related
-# devcontainer.json file is then setup to have postCreateCommand fire restore-diff.sh to expand it.
+# Второй этап начинается сначала и просто копирует файл cache.tar из предыдущего этапа.
+# Затем связанный файл devcontainer.json настраивается так, чтобы postCreateCommand выполнял команду restore-diff.sh для его расширения.
 FROM mcr.microsoft.com/vscode/devcontainers/repos/microsoft/vscode:dev as dev-container
 ARG USERNAME=node
 ARG CACHE_FOLDER="/usr/local/etc/devcontainer-cache"
