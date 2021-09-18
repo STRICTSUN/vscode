@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ * Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ * Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -8,7 +9,7 @@ exports.getVersion = void 0;
 const path = require("path");
 const fs = require("fs");
 /**
- * Returns the sha1 commit version of a repository or undefined in case of failure.
+ * Возвращние версии репозитория с фиксацией sha1 или undefined - в случае сбоя.
  */
 function getVersion(repo) {
     const git = path.join(repo, '.git');

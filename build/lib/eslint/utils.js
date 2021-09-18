@@ -1,7 +1,8 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createImportRuleListener = void 0;
@@ -12,23 +13,23 @@ function createImportRuleListener(validateImport) {
         }
     }
     return {
-        // import ??? from 'module'
+        //Импортировать ??? из "модуля".
         ImportDeclaration: (node) => {
             _checkImport(node.source);
         },
-        // import('module').then(...) OR await import('module')
+        // import('module').then(...) ИЛИ ждать import('module').
         ['CallExpression[callee.type="Import"][arguments.length=1] > Literal']: (node) => {
             _checkImport(node);
         },
-        // import foo = ...
+        // Импортировать foo = ...
         ['TSImportEqualsDeclaration > TSExternalModuleReference > Literal']: (node) => {
             _checkImport(node);
         },
-        // export ?? from 'module'
+        // Экспортировать ?? из "модуля".
         ExportAllDeclaration: (node) => {
             _checkImport(node.source);
         },
-        // export {foo} from 'module'
+        // export {foo} из 'module'.
         ExportNamedDeclaration: (node) => {
             _checkImport(node.source);
         },

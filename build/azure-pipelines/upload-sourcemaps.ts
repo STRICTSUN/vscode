@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+  *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 'use strict';
@@ -17,7 +18,7 @@ const azure = require('gulp-azure-storage');
 const root = path.dirname(path.dirname(__dirname));
 const commit = util.getVersion(root);
 
-// optionally allow to pass in explicit base/maps to upload
+// При необходимости разрешить явную передачу базы/карт для загрузки.
 const [, , base, maps] = process.argv;
 
 function src(base: string, maps = `${base}/**/*.map`) {
@@ -31,9 +32,9 @@ function src(base: string, maps = `${base}/**/*.map`) {
 function main() {
 	const sources = [];
 
-	// vscode client maps (default)
+	// Карты клиента vscode (по умолчанию).
 	if (!base) {
-		const vs = src('out-vscode-min'); // client source-maps only
+		const vs = src('out-vscode-min'); // Только клиентские исходные карты.
 		sources.push(vs);
 
 		const productionDependencies: { name: string, path: string, version: string }[] = deps.getProductionDependencies(root);
@@ -46,14 +47,14 @@ function main() {
 		sources.push(extensionsOut);
 	}
 
-	// specific client base/maps
+	// база/карты конкретного клиента.
 	else {
 		sources.push(src(base, maps));
 	}
 
 	return es.merge(...sources)
 		.pipe(es.through(function (data: Vinyl) {
-			console.log('Uploading Sourcemap', data.relative); // debug
+			console.log('Загрузка исходной карты.', data.relative); // Отладка.
 			this.emit('data', data);
 		}))
 		.pipe(azure.upload({

@@ -3,7 +3,7 @@
 # /etc/rc.d/init.d/xvfbd
 #
 # chkconfig: 345 95 28
-# description: Starts/Stops X Virtual Framebuffer server
+# description: Запуск/остановка сервера X Virtual Framebuffer.
 # processname: Xvfb
 #
 ### BEGIN INIT INFO
@@ -13,7 +13,7 @@
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Start xvfb at boot time
-# Description:       Enable xvfb provided by daemon.
+# Description:       Включение xvfb, предоставляемого демоном.
 ### END INIT INFO
 
 [ "${NETWORKING}" = "no" ] && exit 0
@@ -24,12 +24,12 @@ PROG_OUTPUT="/tmp/Xvfb.out"
 
 case "$1" in
 	start)
-		echo "Starting : X Virtual Frame Buffer "
+		echo "Запуск : X Virtual Frame Buffer. "
 		$PROG $PROG_OPTIONS>>$PROG_OUTPUT 2>&1 &
 		disown -ar
 	;;
 	stop)
-		echo "Shutting down : X Virtual Frame Buffer"
+		echo "Выключение : X Virtual Frame Buffer"
 		killproc $PROG
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && /bin/rm -f /var/lock/subsys/Xvfb
@@ -46,7 +46,7 @@ case "$1" in
 		RETVAL=$?
 	;;
 	*)
-		echo $"Usage: $0 (start|stop|restart|reload|status)"
+		echo $"Обычно: $0 (start|stop|restart|reload|status)"
 		exit 1
 esac
 

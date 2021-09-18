@@ -1,4 +1,4 @@
-# Publish @types/vscode for each release
+# Публикация @types/vscode для каждого выпуска.
 
 trigger:
   branches:
@@ -20,7 +20,7 @@ steps:
       CHANNEL="G1C14HJ2F"
 
       if [ "$TAG_VERSION" == "1.999.0" ]; then
-        MESSAGE="<!here>. Someone pushed 1.999.0 tag. Please delete it ASAP from remote and local."
+        MESSAGE="<!here>.Кто-то вставил тег 1.999.0. Пожалуйста, удалите его как можно скорее с удалённого и локального."
 
         curl -X POST -H "Authorization: Bearer $(SLACK_TOKEN)" \
         -H 'Content-type: application/json; charset=utf-8' \
@@ -29,13 +29,13 @@ steps:
 
         exit 1
       fi
-    displayName: Check 1.999.0 tag
+    displayName: Проверка тэга 1.999.0.
 
   - bash: |
-      # Install build dependencies
+      # Установка зависимостей сборки.
       (cd build && yarn)
       node build/azure-pipelines/publish-types/check-version.js
-    displayName: Check version
+    displayName:Проверка версии.
 
   - bash: |
       git config --global user.email "vscode@microsoft.com"
@@ -55,15 +55,15 @@ steps:
       git commit -m "VS Code $TAG_VERSION Extension API"
       git push origin "vscode-types-$TAG_VERSION"
 
-    displayName: Push update to DefinitelyTyped
+    displayName: Отправка обновления в DefinitelyTyped.
 
   - bash: |
       TAG_VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
       CHANNEL="G1C14HJ2F"
 
-      MESSAGE="DefinitelyTyped/DefinitelyTyped#vscode-types-$TAG_VERSION created. Endgame champion, please open this link, examine changes and create a PR:"
+      MESSAGE="Создан DefinitelyTyped/DefinitelyTyped#vscode-types-$TAG_VERSION. Чемпион эндшпиля, пожалуйста, перейдите по этой ссылке, изучите изменения и создайте PR:"
       LINK="https://github.com/DefinitelyTyped/DefinitelyTyped/compare/vscode-types-$TAG_VERSION?quick_pull=1&body=Updating%20VS%20Code%20Extension%20API.%20See%20https%3A%2F%2Fgithub.com%2Fmicrosoft%2Fvscode%2Fissues%2F70175%20for%20details."
-      MESSAGE2="[@eamodio, @jrieken, @kmaetzel, @egamma]. Please review and merge PR to publish @types/vscode."
+      MESSAGE2="[@eamodio, @jrieken, @kmaetzel, @egamma]. Пожалуйста, пересмотрите и объедините PR для публикации @types/vscode."
 
       curl -X POST -H "Authorization: Bearer $(SLACK_TOKEN)" \
       -H 'Content-type: application/json; charset=utf-8' \
@@ -80,4 +80,4 @@ steps:
       --data '{"channel":"'"$CHANNEL"'", "link_names": true, "text":"'"$MESSAGE2"'"}' \
       https://slack.com/api/chat.postMessage
 
-    displayName: Send message on Slack
+    displayName: Отправка сообщения в Slack.

@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ * Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -22,10 +23,10 @@ function createAsar(folderPath, unpackGlobs, destFilename) {
     };
     const filesystem = new Filesystem(folderPath);
     const out = [];
-    // Keep track of pending inserts
+    // Слежение за незавершенными вставками.
     let pendingInserts = 0;
     let onFileInserted = () => { pendingInserts--; };
-    // Do not insert twice the same directory
+    // Не вставлять дважды, один и тот же каталог.
     const seenDir = {};
     const insertDirectoryRecursive = (dir) => {
         if (seenDir[dir]) {
@@ -53,8 +54,8 @@ function createAsar(folderPath, unpackGlobs, destFilename) {
     const insertFile = (relativePath, stat, shouldUnpack) => {
         insertDirectoryForFile(relativePath);
         pendingInserts++;
-        // Do not pass `onFileInserted` directly because it gets overwritten below.
-        // Create a closure capturing `onFileInserted`.
+        // Не передавать onFileInserted напрямую, потому что он будет перезаписан ниже.
+        // Сделать запись закрытия "onFileInserted".
         filesystem.insertFile(relativePath, shouldUnpack, { stat: stat }, {}).then(() => onFileInserted(), () => onFileInserted());
     };
     return es.through(function (file) {
@@ -62,12 +63,12 @@ function createAsar(folderPath, unpackGlobs, destFilename) {
             return;
         }
         if (!file.stat.isFile()) {
-            throw new Error(`unknown item in stream!`);
+			throw new Error(`неизвестный объект в потоке!`);
         }
         const shouldUnpack = shouldUnpackFile(file);
         insertFile(file.relative, { size: file.contents.length, mode: file.stat.mode }, shouldUnpack);
         if (shouldUnpack) {
-            // The file goes outside of xx.asar, in a folder xx.asar.unpacked
+            // Файл находится вне xx.asar, в папке xx.asar.unpacked.
             const relative = path.relative(folderPath, file.path);
             this.queue(new VinylFile({
                 base: '.',
@@ -77,7 +78,7 @@ function createAsar(folderPath, unpackGlobs, destFilename) {
             }));
         }
         else {
-            // The file goes inside of xx.asar
+            // Файл находится внутри xx.asar.
             out.push(file.contents);
         }
     }, function () {
@@ -101,7 +102,7 @@ function createAsar(folderPath, unpackGlobs, destFilename) {
             }));
             this.queue(null);
         };
-        // Call finish() only when all file inserts have finished...
+        // Метод finish() вызывается, только после завершения вставки всех файлов ... .
         if (pendingInserts === 0) {
             finish();
         }

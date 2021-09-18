@@ -8,7 +8,7 @@ steps:
       versionSpec: "1.x"
 
   - task: AzureKeyVault@1
-    displayName: "Azure Key Vault: Get Secrets"
+    displayName: "Хранилище ключей Azure: Получение ключей."
     inputs:
       azureSubscription: "vscode-builds-subscription"
       KeyVaultName: vscode
@@ -18,17 +18,17 @@ steps:
       . build/azure-pipelines/win32/exec.ps1
       cd build
       exec { yarn }
-    displayName: Install dependencies
+    displayName: Установка зависимостей.
 
   - download: current
     patterns: '**/artifacts_processed_*.txt'
-    displayName: Download all artifacts_processed text files
+    displayName: Скачивание всех текстовых файлов artifacts_processed.
 
   - pwsh: |
       . build/azure-pipelines/win32/exec.ps1
 
       if (Test-Path "$(Pipeline.Workspace)/artifacts_processed_*/artifacts_processed_*.txt") {
-        Write-Host "Artifacts already processed so a build must have already been created."
+        Write-Host "Артефакты уже обработаны, поэтому сборка должна быть уже создана."
         return
       }
 
@@ -36,7 +36,7 @@ steps:
       $VERSION = node -p "require('./package.json').version"
       Write-Host "Creating build with version: $VERSION"
       exec { node build/azure-pipelines/common/createBuild.js $VERSION }
-    displayName: Create build if it hasn't been created before
+    displayName: Создание сборки, если она не была создана ранее.
 
   - pwsh: |
       $env:VSCODE_MIXIN_PASSWORD = "$(github-distro-mixin-password)"
@@ -47,17 +47,17 @@ steps:
       build/azure-pipelines/product-publish.ps1
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-    displayName: Process artifacts
+    displayName: Обработка артефактов.
 
   - publish: $(Pipeline.Workspace)/artifacts_processed_$(System.StageAttempt)/artifacts_processed_$(System.StageAttempt).txt
     artifact: artifacts_processed_$(System.StageAttempt)
-    displayName: Publish what artifacts were published for this stage attempt
+    displayName: Публикация того, какие артефакты были опубликованы для этого этапа попытки.
     condition: always()
 
   - pwsh: |
       $ErrorActionPreference = 'Stop'
 
-      # Determine which stages we need to watch
+      # Укажите, какие этапы нам нужно наблюдать.
       $stages = @(
         if ($env:VSCODE_BUILD_STAGE_WINDOWS -eq 'True') { 'Windows' }
         if ($env:VSCODE_BUILD_STAGE_LINUX -eq 'True') { 'Linux' }
@@ -65,7 +65,7 @@ steps:
       )
       Write-Host "Stages to check: $stages"
 
-      # Get the timeline and see if it says the other stage completed
+      # Получение графика и посмотр, говорит ли он, что другой этап завершён?
       $timeline = Invoke-RestMethod "$($env:BUILDS_API_URL)timeline?api-version=6.0" -Headers @{
         Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
       }  -MaximumRetryCount 5 -RetryIntervalSec 1
@@ -84,8 +84,8 @@ steps:
       }
 
       if ($failedStages.Length) {
-        throw "Failed stages: $($failedStages -join ', '). This stage will now fail so that it is easier to retry failed jobs."
+        throw "Failed stages: $($failedStages -join ', '). Теперь этот этап завершится ошибкой, чтобы легче было повторить ошибки в работе."
       }
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-    displayName: Determine if stage should succeed
+    displayName: Определение того, должен ли этап завершиться успешно.

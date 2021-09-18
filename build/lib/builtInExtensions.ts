@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+  *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+  * Лицензировано в соответствии с лицензией MIT.
+  *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 import * as fs from 'fs';
@@ -102,11 +103,11 @@ function syncExtension(extension: IExtensionDefinition, controlState: 'disabled'
 
 		default:
 			if (!fs.existsSync(controlState)) {
-				log(ansiColors.red(`Error: Built-in extension '${extension.name}' is configured to run from '${controlState}' but that path does not exist.`));
+				log(ansiColors.red(`Ошибка: встроенное расширение '${extension.name}'  настроено для запуска из '${controlState}', но такой путь не существует.`));
 				return es.readArray([]);
 
 			} else if (!fs.existsSync(path.join(controlState, 'package.json'))) {
-				log(ansiColors.red(`Error: Built-in extension '${extension.name}' is configured to run from '${controlState}' but there is no 'package.json' file in that directory.`));
+				log(ansiColors.red(`Ошибка: встроенное расширение '${extension.name}' настроено для запуска из '${controlState}', но в этом каталоге нет файла 'package.json'.`));
 				return es.readArray([]);
 			}
 
@@ -133,8 +134,8 @@ function writeControlFile(control: IControlFile): void {
 }
 
 export function getBuiltInExtensions(): Promise<void> {
-	log('Syncronizing built-in extensions...');
-	log(`You can manage built-in extensions with the ${ansiColors.cyan('--builtin')} flag`);
+	log('Синхронизация встроенных расширений ... .');
+	log(`Вы можете управлять встроенными расширениями с помощью флага ${ansiColors.cyan('--builtin')}`);
 
 	const control = readControlFile();
 	const streams: Stream[] = [];

@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+  *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -13,7 +14,7 @@ const deps = require("../lib/dependencies");
 const azure = require('gulp-azure-storage');
 const root = path.dirname(path.dirname(__dirname));
 const commit = util.getVersion(root);
-// optionally allow to pass in explicit base/maps to upload
+// При необходимости разрешить явную передачу базы/карт для загрузки.
 const [, , base, maps] = process.argv;
 function src(base, maps = `${base}/**/*.map`) {
     return vfs.src(maps, { base })
@@ -24,9 +25,9 @@ function src(base, maps = `${base}/**/*.map`) {
 }
 function main() {
     const sources = [];
-    // vscode client maps (default)
+    // Карты клиента vscode (по умолчанию).
     if (!base) {
-        const vs = src('out-vscode-min'); // client source-maps only
+		const vs = src('out-vscode-min'); // Только клиентские исходные карты.
         sources.push(vs);
         const productionDependencies = deps.getProductionDependencies(root);
         const productionDependenciesSrc = productionDependencies.map(d => path.relative(root, d.path)).map(d => `./${d}/**/*.map`);
@@ -36,13 +37,13 @@ function main() {
         const extensionsOut = vfs.src(['.build/extensions/**/*.js.map', '!**/node_modules/**'], { base: '.build' });
         sources.push(extensionsOut);
     }
-    // specific client base/maps
+    // база/карты конкретного клиента.
     else {
         sources.push(src(base, maps));
     }
     return es.merge(...sources)
         .pipe(es.through(function (data) {
-        console.log('Uploading Sourcemap', data.relative); // debug
+			console.log('Загрузка исходной карты.', data.relative); // Отладка.
         this.emit('data', data);
     }))
         .pipe(azure.upload({

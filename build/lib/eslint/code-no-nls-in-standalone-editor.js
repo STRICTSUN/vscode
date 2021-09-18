@@ -1,7 +1,9 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
+
  *--------------------------------------------------------------------------------------------*/
 const path_1 = require("path");
 const utils_1 = require("./utils");
@@ -9,7 +11,7 @@ module.exports = new class NoNlsInStandaloneEditorRule {
     constructor() {
         this.meta = {
             messages: {
-                noNls: 'Not allowed to import vs/nls in standalone editor modules. Use standaloneStrings.ts'
+				noNls: 'Не разрешается импортировать vs/nls в автономные модули редактора. Воспользуйтесь  standaloneStrings.ts'
             }
         };
     }

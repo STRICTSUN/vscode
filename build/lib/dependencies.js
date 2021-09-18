@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+  * Авторское право (c) Корпорации Майкрософт. Все права защищены.
+  * Лицензировано в соответствии с лицензией MIT.
+  *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -16,10 +17,10 @@ function asYarnDependency(prefix, tree) {
     }
     catch (err) {
         err.message += `: ${tree.name}`;
-        console.warn(`Could not parse semver: ${tree.name}`);
+		console.warn(`Не удалось проанализировать semver: ${tree.name}`);
         return null;
     }
-    // not an actual dependency in disk
+    // Реальной зависимости на диске нет.
     if (parseResult.version !== parseResult.range) {
         return null;
     }
@@ -39,7 +40,7 @@ function getYarnProductionDependencies(cwd) {
     const raw = cp.execSync('yarn list --json', { cwd, encoding: 'utf8', env: Object.assign(Object.assign({}, process.env), { NODE_ENV: 'production' }), stdio: [null, null, 'inherit'] });
     const match = /^{"type":"tree".*$/m.exec(raw);
     if (!match || match.length !== 1) {
-        throw new Error('Could not parse result of `yarn list --json`');
+		throw new Error('Не удалось проанализировать результат`yarn list --json.`');
     }
     const trees = JSON.parse(match[0]).data.trees;
     return trees

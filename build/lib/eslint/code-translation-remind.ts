@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+*  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 import * as eslint from 'eslint';
@@ -15,7 +16,7 @@ export = new class TranslationRemind implements eslint.Rule.RuleModule {
 
 	readonly meta: eslint.Rule.RuleMetaData = {
 		messages: {
-			missing: 'Please add \'{{resource}}\' to ./build/lib/i18n.resources.json file to use translations here.'
+			missing: 'Пожалуйста, добавьте \'{{resource}}\' в файл ./build/lib/i18n.resources.json, чтобы  здесь использовать переводы.'
 		}
 	};
 
@@ -43,7 +44,7 @@ export = new class TranslationRemind implements eslint.Rule.RuleModule {
 		try {
 			json = readFileSync('./build/lib/i18n.resources.json', 'utf8');
 		} catch (e) {
-			console.error('[translation-remind rule]: File with resources to pull from Transifex was not found. Aborting translation resource check for newly defined workbench part/service.');
+			console.error('[translation-remind rule]: Файл с ресурсами для извлечения из Transifex не найден. Прерывание проверки ресурсов перевода для вновь определённой части/службы рабочего места.');
 			return;
 		}
 		const workbenchResources = JSON.parse(json).workbench;

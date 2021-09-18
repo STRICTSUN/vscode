@@ -1,14 +1,15 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 const experimental_utils_1 = require("@typescript-eslint/experimental-utils");
 module.exports = new class ApiProviderNaming {
     constructor() {
         this.meta = {
             messages: {
-                noToken: 'Function lacks a cancellation token, preferable as last argument',
+				noToken: 'В функции отсутствует токен отмены, который предпочтительно использовать в качестве последнего аргумента.',
             }
         };
     }

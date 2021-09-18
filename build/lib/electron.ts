@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ * Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ * Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 'use strict';
@@ -32,26 +33,25 @@ const commit = util.getVersion(root);
 const darwinCreditsTemplate = product.darwinCredits && _.template(fs.readFileSync(path.join(root, product.darwinCredits), 'utf8'));
 
 /**
- * Generate a `DarwinDocumentType` given a list of file extensions, an icon name, and an optional suffix or file type name.
- * @param extensions A list of file extensions, such as `['bat', 'cmd']`
- * @param icon A sentence-cased file type name that matches the lowercase name of a darwin icon resource.
- * For example, `'HTML'` instead of `'html'`, or `'Java'` instead of `'java'`.
- * This parameter is lowercased before it is used to reference an icon file.
- * @param nameOrSuffix An optional suffix or a string to use as the file type. If a suffix is provided,
- * it is used with the icon parameter to generate a file type string. If nothing is provided,
- * `'document'` is used with the icon parameter to generate file type string.
+ * Создание `DarwinDocumentType` с учётом списка расширений файлов, названия значка и необязательного суффикса или названия типа файла.
+ * @param extensions Список расширений файлов, например `['bat', 'cmd']`
+ * @param icon Название типа файла в виде предложения, которое совпадает с названием ресурса значка darwin в нижнем регистре.
+ * Например, HTML вместо html или Java вместо java.
+ * Этот параметр переводится в нижний регистр, прежде чем он будет использоваться для ссылки на файл значка.
+ * @param nameOrSuffix Произвольный суффикс или строка для использования в качестве типа файла.
+ * Если указан суффикс, он используется с параметром значка для создания строки типа файла.
+ * Если ничего не указано, `'document'` используется с параметром icon для создания строки типа файла.
  *
- * For example, if you call `darwinBundleDocumentType(..., 'HTML')`, the resulting file type is `"HTML document"`,
- * and the `'html'` darwin icon is used.
+ * Например, если вы вызываете 'darwinBundleDocumentType(..., 'HTML')', результирующий тип файла '"HTML document"' и используется значок ''html'' darwin.
  *
- * If you call `darwinBundleDocumentType(..., 'Javascript', 'file')`, the resulting file type is `"Javascript file"`.
- * and the `'javascript'` darwin icon is used.
+ * Если вы называете 'darwinBundleDocumentType(..., 'Javascript', 'file')', результирующий тип файла будет `"Javascript file"`.
+ * И используется значок `'javascript'`  darwin.
  *
- * If you call `darwinBundleDocumentType(..., 'bat', 'Windows command script')`, the file type is `"Windows command script"`,
- * and the `'bat'` darwin icon is used.
+ * Если вы вызываете 'darwinBundleDocumentType(..., 'bat', 'Windows command script')', тип файла '"Windows command script"', и используется значок ''bat'' darwin.
  */
 function darwinBundleDocumentType(extensions: string[], icon: string, nameOrSuffix?: string | DarwinDocumentSuffix): DarwinDocumentType {
-	// If given a suffix, generate a name from it. If not given anything, default to 'document'
+    // Если задан суффикс, сгенерируйте из него имя.
+	// Если ничего не дано, по умолчанию используется значение 'document'.
 	if (isDocumentSuffix(nameOrSuffix) || !nameOrSuffix) {
 		nameOrSuffix = icon.charAt(0).toUpperCase() + icon.slice(1) + ' ' + (nameOrSuffix ?? 'document');
 	}
@@ -66,14 +66,14 @@ function darwinBundleDocumentType(extensions: string[], icon: string, nameOrSuff
 }
 
 /**
- * Generate several `DarwinDocumentType`s with unique names and a shared icon.
- * @param types A map of file type names to their associated file extensions.
- * @param icon A darwin icon resource to use. For example, `'HTML'` would refer to `resources/darwin/html.icns`
+ * Создайте несколько`DarwinDocumentType` с уникальными названиями и общим значком.
+ * @param types Сопоставление названий типов файлов с соответствующими им расширениями файлов.
+ * @param icon Ресурс значка darwin для использования. Например, `'HTML'`будет относиться к `resources/darwin/html.icns`
  *
- * Examples:
+ *Примеры:
  * ```
- * darwinBundleDocumentTypes({ 'C header file': 'h', 'C source code': 'c' },'c')
- * darwinBundleDocumentTypes({ 'React source code': ['jsx', 'tsx'] }, 'react')
+ * darwinBundleDocumentTypes({ 'Файл заголовка Cи': 'h', 'Исходный код Cи': 'c' },'c')
+ * darwinBundleDocumentTypes({ 'Исходный код React': ['jsx', 'tsx'] }, 'react')
  * ```
  */
 function darwinBundleDocumentTypes(types: { [name: string]: string | string[] }, icon: string): DarwinDocumentType[] {
@@ -92,8 +92,8 @@ function darwinBundleDocumentTypes(types: { [name: string]: string | string[] },
 export const config = {
 	version: util.getElectronVersion(),
 	productAppName: product.nameLong,
-	companyName: 'Microsoft Corporation',
-	copyright: 'Copyright (C) 2021 Microsoft. All rights reserved',
+	companyName: 'Корпорация Майкрософт',
+	copyright: 'Авторское право (C) 2021 Майкрософт. Все права защищены',
 	darwinIcon: 'resources/darwin/code.icns',
 	darwinBundleIdentifier: product.darwinBundleIdentifier,
 	darwinApplicationCategoryType: 'public.app-category.developer-tools',
@@ -136,7 +136,7 @@ export const config = {
 			'profile', 'rhistory', 'rprofile', 'sh', 'zlogin', 'zlogout',
 			'zprofile', 'zsh', 'zshenv', 'zshrc'
 		], 'Shell', 'script'),
-		// Default icon with specified names
+		// Значок по умолчанию с указанными названиями.
 		...darwinBundleDocumentTypes({
 			'Clojure source code': ['clj', 'cljs', 'cljx', 'clojure'],
 			'VS Code workspace file': 'code-workspace',
@@ -168,7 +168,7 @@ export const config = {
 			'SVG document': ['svg', 'svgz'],
 			'TOML document': 'toml',
 		}, 'default'),
-		// Default icon with default name
+		// Значок по умолчанию с названием по умолчанию.
 		darwinBundleDocumentType([
 			'containerfile', 'ctp', 'dot', 'edn', 'handlebars', 'hbs', 'ml', 'mli',
 			'pl', 'pl6', 'pm', 'pm6', 'pod', 'pp', 'properties', 'psgi', 'rt', 't'

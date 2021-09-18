@@ -1,7 +1,8 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 const path_1 = require("path");
 const minimatch = require("minimatch");
@@ -10,7 +11,7 @@ module.exports = new class {
     constructor() {
         this.meta = {
             messages: {
-                badImport: 'Imports violates \'{{restrictions}}\' restrictions. See https://github.com/microsoft/vscode/wiki/Source-Code-Organization'
+                badImport: 'Импорт нарушает ограничения \'{{restrictions}}\' . Смотрите https://github.com/microsoft/vscode/wiki/Source-Code-Organization'
             },
             docs: {
                 url: 'https://github.com/microsoft/vscode/wiki/Source-Code-Organization'
@@ -27,7 +28,7 @@ module.exports = new class {
         return {};
     }
     _checkImport(context, config, node, path) {
-        // resolve relative paths
+        // Разрешить относительные пути.
         if (path[0] === '.') {
             path = (0, path_1.join)(context.getFilename(), path);
         }
@@ -46,7 +47,7 @@ module.exports = new class {
             }
         }
         if (!matched) {
-            // None of the restrictions matched
+            // Ни одно из ограничений не совпало.
             context.report({
                 loc: node.loc,
                 messageId: 'badImport',

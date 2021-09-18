@@ -10,7 +10,7 @@ steps:
       versionSpec: "14.x"
 
   - task: AzureKeyVault@1
-    displayName: "Azure Key Vault: Get Secrets"
+    displayName: "Хранилище ключей Azure: Получение ключей."
     inputs:
       azureSubscription: "vscode-builds-subscription"
       KeyVaultName: vscode
@@ -31,7 +31,7 @@ steps:
       git checkout origin/electron-12.x.y
       git merge origin/main
 
-      # Push main branch into exploration branch
+      # Перемещение основной ветви в исследовательскую ветвь.
       git push origin HEAD:electron-12.x.y
 
-    displayName: Sync & Merge Exploration
+    displayName: Синхронизация и объединение исследований.

@@ -1,14 +1,15 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 var _a;
 module.exports = new (_a = class ApiProviderNaming {
         constructor() {
             this.meta = {
                 messages: {
-                    naming: 'A provider should only have functions like provideXYZ or resolveXYZ',
+					naming: 'У провайдера должны быть только такие функции, как provideXYZ или resolveXYZ.',
                 }
             };
         }
@@ -20,7 +21,7 @@ module.exports = new (_a = class ApiProviderNaming {
                     var _a;
                     const interfaceName = ((_a = node.parent) === null || _a === void 0 ? void 0 : _a.parent).id.name;
                     if (allowed.has(interfaceName)) {
-                        // allowed
+                        // Разрешено.
                         return;
                     }
                     const methodName = node.key.name;

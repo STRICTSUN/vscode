@@ -1,14 +1,15 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 const experimental_utils_1 = require("@typescript-eslint/experimental-utils");
 module.exports = new class ApiLiteralOrTypes {
     constructor() {
         this.meta = {
             docs: { url: 'https://github.com/microsoft/vscode/wiki/Extension-API-guidelines#creating-objects' },
-            messages: { sync: '`createXYZ`-functions are constructor-replacements and therefore must return sync', }
+			messages: { sync: '`Функции createXYZ`- являются заменой конструкторов и поэтому должны возвращать синхронизацию.', }
         };
     }
     create(context) {

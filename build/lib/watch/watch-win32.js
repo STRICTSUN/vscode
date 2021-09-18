@@ -1,7 +1,8 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ * Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
@@ -30,7 +31,7 @@ function watch(root) {
             }
             const changeType = line[0];
             const changePath = line.substr(2);
-            // filter as early as possible
+            // Отфильтровывать как можно раньше.
             if (/^\.git/.test(changePath) || /(^|\\)out($|\\)/.test(changePath)) {
                 continue;
             }
@@ -47,7 +48,7 @@ function watch(root) {
         result.emit('error', data);
     });
     child.on('exit', function (code) {
-        result.emit('error', 'Watcher died with code ' + code);
+		result.emit('error', 'Помер наблюдатель с кодом ' + code);
         child = null;
     });
     process.once('SIGTERM', function () { process.exit(0); });
@@ -70,7 +71,7 @@ module.exports = function (pattern, options) {
         return f;
     });
     return watcher
-        .pipe(filter(['**', '!.git{,/**}'])) // ignore all things git
+		.pipe(filter(['**', '!.git{,/**}'])) // Игнорировать все вещи git.
         .pipe(filter(pattern))
         .pipe(es.map(function (file, cb) {
         fs.stat(file.path, function (err, stat) {

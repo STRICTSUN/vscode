@@ -1,7 +1,8 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 const path_1 = require("path");
 const utils_1 = require("./utils");
@@ -9,7 +10,7 @@ module.exports = new class {
     constructor() {
         this.meta = {
             messages: {
-                layerbreaker: 'Bad layering. You are not allowed to access {{from}} from here, allowed layers are: [{{allowed}}]'
+				layerbreaker: 'Плохое расположение слоёв. Вам не разрешён доступ к {{from}} отсюда, разрешенными слоями являются: [{{allowed}}]'
             },
             docs: {
                 url: 'https://github.com/microsoft/vscode/wiki/Source-Code-Organization'
@@ -36,7 +37,7 @@ module.exports = new class {
             }
         }
         if (!config) {
-            // nothing
+            // Ничего такого.
             return {};
         }
         return (0, utils_1.createImportRuleListener)((node, path) => {
@@ -47,11 +48,11 @@ module.exports = new class {
             for (let i = parts.length - 1; i >= 0; i--) {
                 const part = parts[i];
                 if (config.allowed.has(part)) {
-                    // GOOD - same layer
+                    // GOOD ХОРОШО - такой же слой.
                     break;
                 }
                 if (config.disallowed.has(part)) {
-                    // BAD - wrong layer
+                    // BAD ПЛОХО - неправильный слой.
                     context.report({
                         loc: node.loc,
                         messageId: 'layerbreaker',

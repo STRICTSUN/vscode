@@ -1,64 +1,64 @@
-// Type definitions for vinyl 0.4.3
-// Project: https://github.com/wearefractal/vinyl
-// Definitions by: vvakame <https://github.com/vvakame/>, jedmao <https://github.com/jedmao>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+// Определения типов для vinyl 0.4.3
+// Проект: https://github.com/wearefractal/vinyl
+//Определения по: vvakame <https://github.com/vvakame/>, jedmao <https://github.com/jedmao>
+//  Определения: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 declare module "vinyl" {
 
 	import fs = require("fs");
 
 	/**
-	 * A virtual file format.
+	 * Формат виртуального файла.
 	 */
 	class File {
 		constructor(options?: {
 			/**
-			* Default: process.cwd()
+			* По умолчанию: process.cwd() .
 			*/
 			cwd?: string;
 			/**
-			 * Used for relative pathing. Typically where a glob starts.
+			 * Используется для относительного пути. Обычно там, где начинается глобус.
 			 */
 			base?: string;
 			/**
-			 * Full path to the file.
+			 * Полный путь к файлу.
 			 */
 			path?: string;
 			/**
-			 * Path history. Has no effect if options.path is passed.
+			 * История пути. Не действует, если передан options.path.
 			 */
 			history?: string[];
 			/**
-			 * The result of an fs.stat call. See fs.Stats for more information.
+			 * Результат вызова fs.stat. Смотрте доп-информацию в fs.Stats.
 			 */
 			stat?: fs.Stats;
 			/**
-			 * File contents.
-			 * Type: Buffer, Stream, or null
+			 * Содержимое файла.
+			 * Тип: Buffer, Stream или null.
 			 */
 			contents?: Buffer | NodeJS.ReadWriteStream;
 		});
 
 		/**
-		 * Default: process.cwd()
+		 * По умолчанию: process.cwd()
 		 */
 		public cwd: string;
 		/**
-		 * Used for relative pathing. Typically where a glob starts.
+		 * Используется для относительного пути. Обычно там, где начинается глобус.
 		 */
 		public base: string;
 		/**
-		 * Full path to the file.
+		 * Полный путь к файлу.
 		 */
 		public path: string;
 		public stat: fs.Stats;
 		/**
-		 * Type: Buffer|Stream|null (Default: null)
+		 * Тип: Buffer|Stream|null (По умолчанию: null)
 		 */
 		public contents: Buffer | NodeJS.ReadableStream;
 		/**
-		 * Returns path.relative for the file base and file path.
-		 * Example:
+		 * Возвращает path.relative для базы файла и пути к файлу.
+		 * Пример:
 		 *  var file = new File({
 		 *    cwd: "/",
 		 *    base: "/test/",
@@ -77,32 +77,32 @@ declare module "vinyl" {
 		public isDirectory(): boolean;
 
 		/**
-		 * Returns a new File object with all attributes cloned. Custom attributes are deep-cloned.
+		 * Возвращает новый объект File со всеми клонированными атрибутами. Настраиваемые атрибуты глубоко клонированы.
 		 */
 		public clone(opts?: { contents?: boolean }): File;
 
 		/**
-		 * If file.contents is a Buffer, it will write it to the stream.
-		 * If file.contents is a Stream, it will pipe it to the stream.
-		 * If file.contents is null, it will do nothing.
+		 * Если file.contents является Buffer, он запишет его в поток.
+		 * Если file.contents является Stream, он передаст его в поток.
+		 * Если file.contents имеет значение null, он ничего не сделает.
 		 */
 		public pipe<T extends NodeJS.ReadWriteStream>(
 			stream: T,
 			opts?: {
 				/**
-				 * If false, the destination stream will not be ended (same as node core).
+				 * Если значение равно false, назначенный поток не будет завершён (так же, как и ядро узла).
 				 */
 				end?: boolean;
 			}): T;
 
 		/**
-		 * Returns a pretty String interpretation of the File. Useful for console.log.
+		 * Возвращает красивую строковую интерпретацию файла. Полезно для console.log.
 		 */
 		public inspect(): string;
 	}
 
 	/**
-	 * This is required as per:
+	 * Это требуется согласно:
 	 * https://github.com/microsoft/TypeScript/issues/5073
 	 */
 	namespace File {}

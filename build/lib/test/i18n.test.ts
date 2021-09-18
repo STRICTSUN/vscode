@@ -1,12 +1,14 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *---------------------------------------------------------------------------------------------
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 import assert = require('assert');
 import i18n = require('../i18n');
 
-suite('XLF Parser Tests', () => {
+suite('Тесты анализатора XLF.', () => {
 	const sampleXlf = '<?xml version="1.0" encoding="utf-8"?><xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2"><file original="vs/base/common/keybinding" source-language="en" datatype="plaintext"><body><trans-unit id="key1"><source xml:lang="en">Key #1</source></trans-unit><trans-unit id="key2"><source xml:lang="en">Key #2 &amp;</source></trans-unit></body></file></xliff>';
 	const sampleTranslatedXlf = '<?xml version="1.0" encoding="utf-8"?><xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2"><file original="vs/base/common/keybinding" source-language="en" target-language="ru" datatype="plaintext"><body><trans-unit id="key1"><source xml:lang="en">Key #1</source><target>Кнопка #1</target></trans-unit><trans-unit id="key2"><source xml:lang="en">Key #2 &amp;</source><target>Кнопка #2 &amp;</target></trans-unit></body></file></xliff>';
 	const originalFilePath = 'vs/base/common/keybinding';
@@ -14,7 +16,7 @@ suite('XLF Parser Tests', () => {
 	const messages = ['Key #1', 'Key #2 &'];
 	const translatedMessages = { key1: 'Кнопка #1', key2: 'Кнопка #2 &' };
 
-	test('Keys & messages to XLF conversion', () => {
+	test('Преобразование кнопок и сообщений в XLF.', () => {
 		const xlf = new i18n.XLF('vscode-workbench');
 		xlf.addFile(originalFilePath, keys, messages);
 		const xlfString = xlf.toString();
@@ -22,14 +24,14 @@ suite('XLF Parser Tests', () => {
 		assert.strictEqual(xlfString.replace(/\s{2,}/g, ''), sampleXlf);
 	});
 
-	test('XLF to keys & messages conversion', () => {
+	test('Преобразование XLF в кнопки и сообщения.', () => {
 		i18n.XLF.parse(sampleTranslatedXlf).then(function (resolvedFiles) {
 			assert.deepStrictEqual(resolvedFiles[0].messages, translatedMessages);
 			assert.strictEqual(resolvedFiles[0].originalFilePath, originalFilePath);
 		});
 	});
 
-	test('JSON file source path to Transifex resource match', () => {
+	test('Исходный путь файла JSON к ресурсу Transifex совпадает.', () => {
 		const editorProject: string = 'vscode-editor',
 			workbenchProject: string = 'vscode-workbench';
 

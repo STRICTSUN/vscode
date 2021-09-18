@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ * Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 import * as path from 'path';
@@ -36,7 +37,7 @@ function watch(root: string): Stream {
 			const changeType = <'0' | '1' | '2'>line[0];
 			const changePath = line.substr(2);
 
-			// filter as early as possible
+			// Отфильтровывать как можно раньше.
 			if (/^\.git/.test(changePath) || /(^|\\)out($|\\)/.test(changePath)) {
 				continue;
 			}
@@ -57,7 +58,7 @@ function watch(root: string): Stream {
 	});
 
 	child.on('exit', function (code) {
-		result.emit('error', 'Watcher died with code ' + code);
+		result.emit('error', 'Помер наблюдатель с кодом ' + code);
 		child = null;
 	});
 
@@ -86,7 +87,7 @@ module.exports = function (pattern: string | string[] | filter.FileFunction, opt
 	});
 
 	return watcher
-		.pipe(filter(['**', '!.git{,/**}'])) // ignore all things git
+		.pipe(filter(['**', '!.git{,/**}'])) //Игнорировать все вещи git.
 		.pipe(filter(pattern))
 		.pipe(es.map(function (file: File, cb) {
 			fs.stat(file.path, function (err, stat) {

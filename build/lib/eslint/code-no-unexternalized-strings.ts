@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 import * as eslint from 'eslint';
@@ -20,10 +21,10 @@ export = new class NoUnexternalizedStrings implements eslint.Rule.RuleModule {
 
 	readonly meta: eslint.Rule.RuleMetaData = {
 		messages: {
-			doubleQuoted: 'Only use double-quoted strings for externalized strings.',
-			badKey: 'The key \'{{key}}\' doesn\'t conform to a valid localize identifier.',
-			duplicateKey: 'Duplicate key \'{{key}}\' with different message value.',
-			badMessage: 'Message argument to \'{{message}}\' must be a string literal.'
+			doubleQuoted: 'Используйте строки в двойных кавычках только для внешних строк.',
+			badKey: 'Ключ \'{{key}}\' не соответствует действительному идентификатору локализации.',
+			duplicateKey: 'Дубликат ключа \'{{key}}\' с другим значением сообщения.',
+			badMessage: 'Аргумент сообщения для \'{{message}}\' должен быть строковым литералом.'
 		}
 	};
 
@@ -44,7 +45,7 @@ export = new class NoUnexternalizedStrings implements eslint.Rule.RuleModule {
 			const [keyNode, messageNode] = (<TSESTree.CallExpression>node).arguments;
 
 			// (1)
-			// extract key so that it can be checked later
+			//Извлечение ключа, чтобы его можно было проверить позже.
 			let key: string | undefined;
 			if (isStringLiteral(keyNode)) {
 				doubleQuotedStringLiterals.delete(keyNode);
@@ -73,8 +74,7 @@ export = new class NoUnexternalizedStrings implements eslint.Rule.RuleModule {
 			}
 
 			// (2)
-			// remove message-argument from doubleQuoted list and make
-			// sure it is a string-literal
+			 // Удалите аргумент-сообщение из списка doubleQuoted и убедитесь, что это строковый литерал.
 			doubleQuotedStringLiterals.delete(messageNode);
 			if (!isStringLiteral(messageNode)) {
 				context.report({
@@ -87,7 +87,7 @@ export = new class NoUnexternalizedStrings implements eslint.Rule.RuleModule {
 
 		function reportBadStringsAndBadKeys() {
 			// (1)
-			// report all strings that are in double quotes
+			//Сообщать обо всех строках, заключённых в двойные кавычки.
 			for (const node of doubleQuotedStringLiterals) {
 				context.report({ loc: node.loc, messageId: 'doubleQuoted' });
 			}
@@ -95,7 +95,7 @@ export = new class NoUnexternalizedStrings implements eslint.Rule.RuleModule {
 			for (const [key, values] of externalizedStringLiterals) {
 
 				// (2)
-				// report all invalid NLS keys
+				// Сообщать обо всех недействительных ключах NLS.
 				if (!key.match(NoUnexternalizedStrings._rNlsKeys)) {
 					for (let value of values) {
 						context.report({ loc: value.call.loc, messageId: 'badKey', data: { key } });
@@ -103,7 +103,7 @@ export = new class NoUnexternalizedStrings implements eslint.Rule.RuleModule {
 				}
 
 				// (2)
-				// report all invalid duplicates (same key, different message)
+				// Сообщать обо всех недопустимых дубликатах - такой  же ключ, другое сообщение.
 				if (values.length > 1) {
 					for (let i = 1; i < values.length; i++) {
 						if (context.getSourceCode().getText(<any>values[i - 1].message) !== context.getSourceCode().getText(<any>values[i].message)) {

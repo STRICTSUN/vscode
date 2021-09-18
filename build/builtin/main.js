@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
@@ -11,7 +12,7 @@ let window = null;
 
 ipcMain.handle('pickdir', async () => {
 	const result = await dialog.showOpenDialog(window, {
-		title: 'Choose Folder',
+		title: 'Выбор папки',
 		properties: ['openDirectory']
 	});
 

@@ -1,7 +1,8 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+  *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ * Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getBuiltInExtensions = void 0;
@@ -59,7 +60,7 @@ function syncExtension(extension, controlState) {
     if (extension.platforms) {
         const platforms = new Set(extension.platforms);
         if (!platforms.has(process.platform)) {
-            log(ansiColors.gray('[skip]'), `${extension.name}@${extension.version}: Platform '${process.platform}' not supported: [${extension.platforms}]`, ansiColors.green('✔︎'));
+			log(ansiColors.gray('[skip]'), `${extension.name}@${extension.version}: Платформа '${process.platform}' не поддерживается: [${extension.platforms}]`, ansiColors.green('✔︎'));
             return es.readArray([]);
         }
     }
@@ -71,11 +72,11 @@ function syncExtension(extension, controlState) {
             return syncMarketplaceExtension(extension);
         default:
             if (!fs.existsSync(controlState)) {
-                log(ansiColors.red(`Error: Built-in extension '${extension.name}' is configured to run from '${controlState}' but that path does not exist.`));
+				log(ansiColors.red(`Ошибка: встроенное расширение '${extension.name}'  настроено для запуска из '${controlState}', но такой путь не существует.`));
                 return es.readArray([]);
             }
             else if (!fs.existsSync(path.join(controlState, 'package.json'))) {
-                log(ansiColors.red(`Error: Built-in extension '${extension.name}' is configured to run from '${controlState}' but there is no 'package.json' file in that directory.`));
+				log(ansiColors.red(`Ошибка: встроенное расширение '${extension.name}' настроено для запуска из '${controlState}', но в этом каталоге нет файла 'package.json'.`));
                 return es.readArray([]);
             }
             log(ansiColors.blue('[local]'), `${extension.name}: ${ansiColors.cyan(controlState)}`, ansiColors.green('✔︎'));
@@ -95,8 +96,8 @@ function writeControlFile(control) {
     fs.writeFileSync(controlFilePath, JSON.stringify(control, null, 2));
 }
 function getBuiltInExtensions() {
-    log('Syncronizing built-in extensions...');
-    log(`You can manage built-in extensions with the ${ansiColors.cyan('--builtin')} flag`);
+	log('Синхронизация встроенных расширений ... .');
+	log(`Вы можете управлять встроенными расширениями с помощью флага ${ansiColors.cyan('--builtin')} `);
     const control = readControlFile();
     const streams = [];
     for (const extension of [...builtInExtensions, ...webBuiltInExtensions]) {

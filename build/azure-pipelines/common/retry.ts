@@ -1,10 +1,10 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ * Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ *  Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 'use strict';
-
 export async function retry<T>(fn: () => Promise<T>): Promise<T> {
 	for (let run = 1; run <= 10; run++) {
 		try {
@@ -13,14 +13,11 @@ export async function retry<T>(fn: () => Promise<T>): Promise<T> {
 			if (!/ECONNRESET/.test(err.message)) {
 				throw err;
 			}
-
 			const millis = (Math.random() * 200) + (50 * Math.pow(1.5, run));
-			console.log(`Failed with ECONNRESET, retrying in ${millis}ms...`);
-
-			// maximum delay is 10th retry: ~3 seconds
+			console.log(`Ошибка ECONNRESET, повторная попытка через ${millis} мс ...`);
+			// Максимальная задержка при 10-й повторной попытке: ~3 секунды.
 			await new Promise(c => setTimeout(c, millis));
 		}
 	}
-
-	throw new Error('Retried too many times');
+	throw new Error('Слишком много повторных попыток.');
 }

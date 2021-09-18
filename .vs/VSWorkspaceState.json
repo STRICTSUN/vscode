@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\build",
-    "\\build\\azure-pipelines",
-    "\\build\\azure-pipelines\\common"
+    "\\build\\lib"
   ],
+  "SelectedNode": "\\build\\lib\\layersChecker.js",
   "PreviewInSolutionExplorer": false
 }

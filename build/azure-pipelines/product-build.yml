@@ -17,7 +17,7 @@ parameters:
       - insider
       - stable
   - name: ENABLE_TERRAPIN
-    displayName: "Enable Terrapin"
+    displayName: "Включение Terrapin."
     type: boolean
     default: true
   - name: VSCODE_BUILD_WIN32
@@ -65,19 +65,19 @@ parameters:
     type: boolean
     default: true
   - name: VSCODE_PUBLISH
-    displayName: "Publish to builds.code.visualstudio.com"
+    displayName: "Публикация на builds.code.visualstudio.com ."
     type: boolean
     default: true
   - name: VSCODE_RELEASE
-    displayName: "Release build if successful"
+    displayName: "Успешная сборка выпуска."
     type: boolean
     default: false
   - name: VSCODE_COMPILE_ONLY
-    displayName: "Run Compile stage exclusively"
+    displayName: "Запуск только этапа компиляции."
     type: boolean
     default: false
   - name: VSCODE_STEP_ON_IT
-    displayName: "Skip tests"
+    displayName: "Пропуск тестов."
     type: boolean
     default: false
 
@@ -151,7 +151,7 @@ stages:
       dependsOn:
         - Compile
       pool:
-        vmImage: VS2017-Win2016
+        vmImage: VS2019-Win2016
       jobs:
 
         - ${{ if eq(parameters.VSCODE_BUILD_WIN32, true) }}:
@@ -215,7 +215,7 @@ stages:
             steps:
               - template: linux/product-build-linux.yml
 
-        # TODO@joaomoreno: We don't ship ARM snaps for now
+        # TODO@joaomoreno: Сейчас мы не отправляем снимки ARM.
         - ${{ if and(false, eq(variables['VSCODE_CIBUILD'], false), eq(parameters.VSCODE_BUILD_LINUX_ARMHF, true)) }}:
           - job: LinuxSnapArmhf
             dependsOn:
@@ -235,7 +235,7 @@ stages:
             steps:
               - template: linux/product-build-linux.yml
 
-        # TODO@joaomoreno: We don't ship ARM snaps for now
+        # TODO@joaomoreno: Сейчас мы не отправляем снимки ARM.
         - ${{ if and(false, eq(variables['VSCODE_CIBUILD'], false), eq(parameters.VSCODE_BUILD_LINUX_ARM64, true)) }}:
           - job: LinuxSnapArm64
             dependsOn:
@@ -332,7 +332,7 @@ stages:
       jobs:
         - job: PublishBuild
           timeoutInMinutes: 180
-          displayName: Publish Build
+          displayName: Публикация сборки.
           steps:
             - template: product-publish.yml
 
@@ -344,6 +344,6 @@ stages:
           vmImage: "Ubuntu-18.04"
         jobs:
           - job: ReleaseBuild
-            displayName: Release Build
+            displayName: Сборка выпуска.
             steps:
               - template: product-release.yml

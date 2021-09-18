@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -42,7 +43,7 @@ async function main() {
         'gatekeeper-assess': false
     };
     const appOpts = Object.assign(Object.assign({}, defaultOpts), { 
-        // TODO(deepak1556): Incorrectly declared type in electron-osx-sign
+        // TODO(deepak1556): Некорректно задекларированный тип в electron-osx-sign.
         ignore: (filePath) => {
             return filePath.includes(gpuHelperAppName) ||
                 filePath.includes(rendererHelperAppName);
@@ -52,9 +53,9 @@ async function main() {
     let infoPlistString = await fs.readFile(infoPlistPath, 'utf8');
     let infoPlistJson = plist.parse(infoPlistString);
     Object.assign(infoPlistJson, {
-        NSAppleEventsUsageDescription: 'An application in Visual Studio Code wants to use AppleScript.',
-        NSMicrophoneUsageDescription: 'An application in Visual Studio Code wants to use the Microphone.',
-        NSCameraUsageDescription: 'An application in Visual Studio Code wants to use the Camera.'
+		NSAppleEventsUsageDescription: 'Приложение в Студии Визуального Кода хочет использовать AppleScript.',
+		NSMicrophoneUsageDescription: 'Приложение в Студии Визуального Кода хочет использовать микрофон.',
+		NSCameraUsageDescription: 'Приложение в Студии Визуального Кода хочет использовать камеру.'
     });
     await fs.writeFile(infoPlistPath, plist.build(infoPlistJson), 'utf8');
     await codesign.signAsync(gpuHelperOpts);

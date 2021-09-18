@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 import * as eslint from 'eslint';
@@ -10,7 +11,7 @@ export = new class ApiVsCodeInComments implements eslint.Rule.RuleModule {
 
 	readonly meta: eslint.Rule.RuleMetaData = {
 		messages: {
-			comment: `Don't use the term 'vs code' in comments`
+			comment: `Не используйте термин 'vs code' в комментариях.`
 		}
 	};
 
@@ -33,12 +34,12 @@ export = new class ApiVsCodeInComments implements eslint.Rule.RuleModule {
 					const re = /vs code/ig;
 					let match: RegExpExecArray | null;
 					while ((match = re.exec(comment.value))) {
-						// Allow using 'VS Code' in quotes
+						// Разрешите использование 'VS Code' в кавычках.
 						if (comment.value[match.index - 1] === `'` && comment.value[match.index + match[0].length] === `'`) {
 							continue;
 						}
 
-						// Types for eslint seem incorrect
+						// Типы для eslint выглядят некорректными.
 						const start = sourceCode.getLocFromIndex(startIndex + match.index) as any as estree.Position;
 						const end = sourceCode.getLocFromIndex(startIndex + match.index + match[0].length) as any as estree.Position;
 						context.report({

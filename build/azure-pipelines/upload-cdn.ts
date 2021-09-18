@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 'use strict';
@@ -22,7 +23,7 @@ function main() {
 		.pipe(filter(f => !f.isDirectory()))
 		.pipe(gzip({ append: false }))
 		.pipe(es.through(function (data: Vinyl) {
-			console.log('Uploading CDN file:', data.relative); // debug
+			console.log('Загрузка файла CDN:', data.relative); //  Отладка.
 			this.emit('data', data);
 		}))
 		.pipe(azure.upload({

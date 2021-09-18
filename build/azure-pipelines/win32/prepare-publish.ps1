@@ -15,7 +15,7 @@ $Web = "$Root\vscode-server-win32-$Arch-web"
 $WebZip = "$Repo\.build\vscode-server-win32-$Arch-web.zip"
 $Build = "$Root\VSCode-win32-$Arch"
 
-# Create server archive
+# Создание архива сервера.
 if ("$Arch" -ne "arm64") {
 	exec { xcopy $LegacyServer $Server /H /E /I }
 	exec { .\node_modules\7zip\7zip-lite\7z.exe a -tzip $ServerZip $Server -r }
@@ -23,7 +23,7 @@ if ("$Arch" -ne "arm64") {
 	exec { .\node_modules\7zip\7zip-lite\7z.exe a -tzip $WebZip $Web -r }
 }
 
-# get version
+# Получить версию.
 $PackageJson = Get-Content -Raw -Path "$Build\resources\app\package.json" | ConvertFrom-Json
 $Version = $PackageJson.version
 
@@ -31,7 +31,7 @@ $ARCHIVE_NAME = "VSCode-win32-$Arch-$Version.zip"
 $SYSTEM_SETUP_NAME = "VSCodeSetup-$Arch-$Version.exe"
 $USER_SETUP_NAME = "VSCodeUserSetup-$Arch-$Version.exe"
 
-# Set variables for upload
+# Установка переменных для загрузки.
 Move-Item $Zip "$Repo\.build\win32-$Arch\archive\$ARCHIVE_NAME"
 Write-Host "##vso[task.setvariable variable=ARCHIVE_NAME]$ARCHIVE_NAME"
 Move-Item $SystemExe "$Repo\.build\win32-$Arch\system-setup\$SYSTEM_SETUP_NAME"

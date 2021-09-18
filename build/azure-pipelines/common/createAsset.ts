@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ * Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ *  Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 'use strict';
@@ -26,11 +27,11 @@ interface Asset {
 }
 
 if (process.argv.length !== 8) {
-	console.error('Usage: node createAsset.js PRODUCT OS ARCH TYPE NAME FILE');
+	console.error('Обычно: node createAsset.js PRODUCT OS ARCH TYPE NAME FILE');
 	process.exit(-1);
 }
 
-// Contains all of the logic for mapping details to our actual product names in CosmosDB
+// Содержит всю логику для сопоставления данных с нашими фактическими названиями продуктов в CosmosDB.
 function getPlatform(product: string, os: string, arch: string, type: string): string {
 	switch (os) {
 		case 'win32':
@@ -104,7 +105,7 @@ function getPlatform(product: string, os: string, arch: string, type: string): s
 	}
 }
 
-// Contains all of the logic for mapping types to our actual types in CosmosDB
+// Содержит всю логику для сопоставления типов с нашими фактическими типами в CosmosDB.
 function getRealType(type: string) {
 	switch (type) {
 		case 'user-setup':
@@ -149,7 +150,7 @@ function getEnv(name: string): string {
 	const result = process.env[name];
 
 	if (typeof result === 'undefined') {
-		throw new Error('Missing env: ' + name);
+		throw new Error('Отсутствует Env: ' + name);
 	}
 
 	return result;
@@ -157,13 +158,13 @@ function getEnv(name: string): string {
 
 async function main(): Promise<void> {
 	const [, , product, os, arch, unprocessedType, fileName, filePath] = process.argv;
-	// getPlatform needs the unprocessedType
+	// getPlatform требуется unprocessedType.
 	const platform = getPlatform(product, os, arch, unprocessedType);
 	const type = getRealType(unprocessedType);
 	const quality = getEnv('VSCODE_QUALITY');
 	const commit = getEnv('BUILD_SOURCEVERSION');
 
-	console.log('Creating asset...');
+	console.log('Создание ресурса...');
 
 	const stat = await new Promise<fs.Stats>((c, e) => fs.stat(filePath, (err, stat) => err ? e(err) : c(stat)));
 	const size = stat.size;
@@ -185,27 +186,27 @@ async function main(): Promise<void> {
 	const blobExists = await doesAssetExist(blobService, quality, blobName);
 
 	if (blobExists) {
-		console.log(`Blob ${quality}, ${blobName} already exists, not publishing again.`);
+		console.log(`Blob ${quality}, ${blobName} уже существует, повторно не публикуется.`);
 		return;
 	}
 
 	const mooncakeBlobService = azure.createBlobService(storageAccount, process.env['MOONCAKE_STORAGE_ACCESS_KEY']!, `${storageAccount}.blob.core.chinacloudapi.cn`)
 		.withFilter(new azure.ExponentialRetryPolicyFilter(20));
 
-	// mooncake is fussy and far away, this is needed!
+	// Mooncake очень требователен и удалён, так надо!
 	blobService.defaultClientRequestTimeoutInMs = 10 * 60 * 1000;
 	mooncakeBlobService.defaultClientRequestTimeoutInMs = 10 * 60 * 1000;
 
-	console.log('Uploading blobs to Azure storage and Mooncake Azure storage...');
+	console.log('Загрузка блобов в хранилища Azure  и Mooncake Azure  ...');
 
 	await retry(() => Promise.all([
 		uploadBlob(blobService, quality, blobName, filePath, fileName),
 		uploadBlob(mooncakeBlobService, quality, blobName, filePath, fileName)
 	]));
 
-	console.log('Blobs successfully uploaded.');
+	console.log('Блобы успешно загружены.');
 
-	// TODO: Understand if blobName and blobPath are the same and replace blobPath with blobName if so.
+	//  Задача: Понять, совпадают ли blobName и blobPath и если да, заменить blobPath на blobName.
 	const assetUrl = `${process.env['AZURE_CDN_URL']}/${quality}/${blobName}`;
 	const blobPath = url.parse(assetUrl).path;
 	const mooncakeUrl = `${process.env['MOONCAKE_CDN_URL']}${blobPath}`;
@@ -220,22 +221,22 @@ async function main(): Promise<void> {
 		size
 	};
 
-	// Remove this if we ever need to rollback fast updates for windows
+	// Удаление всего этого, если нам когда-нибудь понадобится быстро откатить обновления для windows.
 	if (/win32/.test(platform)) {
 		asset.supportsFastUpdate = true;
 	}
 
-	console.log('Asset:', JSON.stringify(asset, null, '  '));
+	console.log('Ресурс:', JSON.stringify(asset, null, '  '));
 
 	const client = new CosmosClient({ endpoint: process.env['AZURE_DOCUMENTDB_ENDPOINT']!, key: process.env['AZURE_DOCUMENTDB_MASTERKEY'] });
 	const scripts = client.database('builds').container(quality).scripts;
 	await retry(() => scripts.storedProcedure('createAsset').execute('', [commit, asset, true]));
 
-	console.log(`  Done ✔️`);
+	console.log(`  Сделано ✔️`);
 }
 
 main().then(() => {
-	console.log('Asset successfully created');
+	console.log('Ресурс успешно создан');
 	process.exit(0);
 }, err => {
 	console.error(err);

@@ -8,7 +8,7 @@ steps:
       versionSpec: "1.x"
 
   - task: AzureKeyVault@1
-    displayName: "Azure Key Vault: Get Secrets"
+    displayName: "Хранилище ключей Azure: Получение ключей."
     inputs:
       azureSubscription: "vscode-builds-subscription"
       KeyVaultName: vscode

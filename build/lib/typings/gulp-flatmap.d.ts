@@ -3,7 +3,7 @@ declare module 'gulp-flatmap' {
 	function f(fn:(stream:NodeJS.ReadWriteStream, file:File)=>NodeJS.ReadWriteStream): NodeJS.ReadWriteStream;
 
 	/**
-	 * This is required as per:
+	 * Это требуется в соответствии с:
 	 * https://github.com/microsoft/TypeScript/issues/5073
 	 */
 	namespace f {}

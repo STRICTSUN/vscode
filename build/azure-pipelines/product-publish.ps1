@@ -21,27 +21,27 @@ function Get-PipelineArtifact {
 	}
 }
 
-# This set will keep track of which artifacts have already been processed
+#Этот набор будет отслеживать, какие артефакты уже были обработаны.
 $set = [System.Collections.Generic.HashSet[string]]::new()
 
 if (Test-Path $ARTIFACT_PROCESSED_WILDCARD_PATH) {
-	# Grab the latest artifact_processed text file and load all assets already processed from that.
-	# This means that the latest artifact_processed_*.txt file has all of the contents of the previous ones.
-	# Note: The kusto-like syntax only works in PS7+ and only in scripts, not at the REPL.
+	# Возьмите последний текстовый файл artifact_processed и загрузите из него все уже обработанные ресурсы.
+	# Это означает, что последний файл artifact_processed_*.txt содержит всё содержимое предыдущих файлов.
+	# Внимание. Синтаксис, подобный kusto, работает только в PS7 + и только в сценариях, но не в REPL.
 	Get-ChildItem $ARTIFACT_PROCESSED_WILDCARD_PATH
 		| Sort-Object
 		| Select-Object -Last 1
 		| Get-Content
 		| ForEach-Object {
 			$set.Add($_) | Out-Null
-			Write-Host "Already processed artifact: $_"
+			Write-Host "Уже обработанный артефакт: $_"
 		}
 }
 
-# Create the artifact file that will be used for this run
+# Создание файла артефакта, который будет использоваться для этого запуска.
 New-Item -Path $ARTIFACT_PROCESSED_FILE_PATH -Force | Out-Null
 
-# Determine which stages we need to watch
+# Укажите, какие этапы нам нужно наблюдать.
 $stages = @(
 	if ($env:VSCODE_BUILD_STAGE_WINDOWS -eq 'True') { 'Windows' }
 	if ($env:VSCODE_BUILD_STAGE_LINUX -eq 'True') { 'Linux' }
@@ -59,7 +59,7 @@ do {
 	$artifacts | ForEach-Object {
 		$artifactName = $_.name
 		if($set.Add($artifactName)) {
-			Write-Host "Processing artifact: '$artifactName. Downloading from: $($_.resource.downloadUrl)"
+			Write-Host "Обработка артефакта '$artifactName. Скачивание с: $($_.resource.downloadUrl)"
 
 			try {
 				Invoke-RestMethod $_.resource.downloadUrl -OutFile "$env:AGENT_TEMPDIRECTORY/$artifactName.zip" -Headers @{
@@ -75,8 +75,8 @@ do {
 
 			$null,$product,$os,$arch,$type = $artifactName -split '_'
 			$asset = Get-ChildItem -rec "$env:AGENT_TEMPDIRECTORY/$artifactName"
-			Write-Host "Processing artifact with the following values:"
-			# turning in into an object just to log nicely
+			Write-Host "Обработка артефакта со следующими значениями:"
+			# Превращение в объект просто для того, чтобы красиво войти в систему.
 			@{
 				product = $product
 				os = $os
@@ -90,7 +90,7 @@ do {
 		}
 	}
 
-	# Get the timeline and see if it says the other stage completed
+	#Получение графика и посмотрите, сказано ли в нём, что другой этап завершён.
 	try {
 		$timeline = Invoke-RestMethod "$($env:BUILDS_API_URL)timeline?api-version=6.0" -Headers @{
 			Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
@@ -111,4 +111,4 @@ do {
 	$artifactsStillToProcess = $artifacts.Count -ne $set.Count
 } while (!$otherStageFinished -or $artifactsStillToProcess)
 
-Write-Host "Processed $($set.Count) artifacts."
+Write-Host "Обработано $($set.Count) артефактов."

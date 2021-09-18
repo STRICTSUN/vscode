@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 import * as eslint from 'eslint';
@@ -15,23 +16,23 @@ export function createImportRuleListener(validateImport: (node: TSESTree.Literal
 	}
 
 	return {
-		// import ??? from 'module'
+		//Импортировать ??? из "модуля".
 		ImportDeclaration: (node: any) => {
 			_checkImport((<TSESTree.ImportDeclaration>node).source);
 		},
-		// import('module').then(...) OR await import('module')
+		// import('module').then(...) ИЛИ ждать import('module').
 		['CallExpression[callee.type="Import"][arguments.length=1] > Literal']: (node: any) => {
 			_checkImport(node);
 		},
-		// import foo = ...
+		// Импортировать foo = ...
 		['TSImportEqualsDeclaration > TSExternalModuleReference > Literal']: (node: any) => {
 			_checkImport(node);
 		},
-		// export ?? from 'module'
+		// Экспортировать ?? из "модуля".
 		ExportAllDeclaration: (node: any) => {
 			_checkImport((<TSESTree.ExportAllDeclaration>node).source);
 		},
-		// export {foo} from 'module'
+		// export {foo} из 'module'.
 		ExportNamedDeclaration: (node: any) => {
 			_checkImport((<TSESTree.ExportNamedDeclaration>node).source);
 		},

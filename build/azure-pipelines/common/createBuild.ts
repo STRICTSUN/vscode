@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ * Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ *  Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 'use strict';
@@ -9,7 +10,7 @@ import { CosmosClient } from '@azure/cosmos';
 import { retry } from './retry';
 
 if (process.argv.length !== 3) {
-	console.error('Usage: node createBuild.js VERSION');
+	console.error('Обычно: node createBuild.js VERSION');
 	process.exit(-1);
 }
 
@@ -17,7 +18,7 @@ function getEnv(name: string): string {
 	const result = process.env[name];
 
 	if (typeof result === 'undefined') {
-		throw new Error('Missing env: ' + name);
+		throw new Error('Отсутствует Env: ' + name);
 	}
 
 	return result;
@@ -31,10 +32,10 @@ async function main(): Promise<void> {
 	const sourceBranch = getEnv('BUILD_SOURCEBRANCH');
 	const version = _version + (quality === 'stable' ? '' : `-${quality}`);
 
-	console.log('Creating build...');
-	console.log('Quality:', quality);
-	console.log('Version:', version);
-	console.log('Commit:', commit);
+	console.log('Создание сборки ...');
+	console.log('Качество:', quality);
+	console.log('Версия:', version);
+	console.log('Коммит:', commit);
 
 	const build = {
 		id: commit,
@@ -53,7 +54,7 @@ async function main(): Promise<void> {
 }
 
 main().then(() => {
-	console.log('Build successfully created');
+	console.log('Сборка успешно создана.');
 	process.exit(0);
 }, err => {
 	console.error(err);

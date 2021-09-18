@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+  * Лицензировано в соответствии с лицензией MIT.
+  *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта..
  *--------------------------------------------------------------------------------------------*/
 
 import * as fs from 'fs';
@@ -95,7 +96,7 @@ export interface ILoaderConfig {
 }
 
 /**
- * Bundle `entryPoints` given config `config`.
+ * Связывание `entryPoints` в заданную конфигурацию `config`.
  */
 export function bundle(entryPoints: IEntryPoint[], config: ILoaderConfig, callback: (err: any, result: IBundleResult | null) => void): void {
 	const entryPointsMap: IEntryPointMap = {};
@@ -279,7 +280,7 @@ function extractStrings(destFiles: IConcatFile[]): IConcatFile[] {
 			return;
 		}
 
-		// Do one pass to record the usage counts for each module id
+		// Сделайте один проход, чтобы записать количество использований для каждого идентификатора модуля.
 		const useCounts: { [moduleId: string]: number; } = {};
 		destFile.sources.forEach((source) => {
 			const matches = source.contents.match(/define\(("[^"]+"),\s*\[(((, )?("|')[^"']+("|'))+)\]/);
@@ -335,7 +336,7 @@ function extractStrings(destFiles: IConcatFile[]): IConcatFile[] {
 }
 
 function removeDuplicateTSBoilerplate(destFiles: IConcatFile[]): IConcatFile[] {
-	// Taken from typescript compiler => emitFiles
+	// Взято из компилятора typescrip => emitFiles
 	const BOILERPLATE = [
 		{ start: /^var __extends/, end: /^}\)\(\);$/ },
 		{ start: /^var __assign/, end: /^};$/ },
@@ -489,7 +490,7 @@ function emitEntryPoint(
 function readFileAndRemoveBOM(path: string): string {
 	const BOM_CHAR_CODE = 65279;
 	let contents = fs.readFileSync(path, 'utf8');
-	// Remove BOM
+	// Удаление BOM.
 	if (contents.charCodeAt(0) === BOM_CHAR_CODE) {
 		contents = contents.substring(1);
 	}
@@ -519,10 +520,10 @@ function emitPlugin(entryPoint: string, plugin: ILoaderPlugin, pluginName: strin
 
 function emitNamedModule(moduleId: string, defineCallPosition: IPosition, path: string, contents: string): IFile {
 
-	// `defineCallPosition` is the position in code: |define()
+	// `defineCallPosition` позиция в code: |define()
 	const defineCallOffset = positionToOffset(contents, defineCallPosition.line, defineCallPosition.col);
 
-	// `parensOffset` is the position in code: define|()
+	// `parensOffset` позиция в code: define|()
 	const parensOffset = contents.indexOf('(', defineCallOffset);
 
 	const insertStr = '"' + moduleId + '", ';
@@ -543,7 +544,7 @@ function emitShimmedModule(moduleId: string, myDeps: string[], factory: string, 
 }
 
 /**
- * Convert a position (line:col) to (offset) in string `str`
+ * Преобразование позиции  строка:столбец, в смещение, в строке `str`.
  */
 function positionToOffset(str: string, desiredLine: number, desiredCol: number): number {
 	if (desiredLine === 1) {
@@ -566,7 +567,7 @@ function positionToOffset(str: string, desiredLine: number, desiredCol: number):
 
 
 /**
- * Return a set of reachable nodes in `graph` starting from `rootNodes`
+ * Возвращение набора достижимых узлов в `graph`, начиная с`rootNodes`.
  */
 function visit(rootNodes: string[], graph: IGraph): INodeSet {
 	const result: INodeSet = {};
@@ -591,7 +592,7 @@ function visit(rootNodes: string[], graph: IGraph): INodeSet {
 }
 
 /**
- * Perform a topological sort on `graph`
+ * Выполнение топологической сортировки на `graph`
  */
 function topologicalSort(graph: IGraph): string[] {
 
@@ -624,7 +625,7 @@ function topologicalSort(graph: IGraph): string[] {
 	});
 
 	while (S.length > 0) {
-		// Ensure the exact same order all the time with the same inputs
+		// Обеспечение всегда одного и того же порядка с одинаковыми входными данными.
 		S.sort();
 
 		const n: string = S.shift()!;
@@ -641,7 +642,7 @@ function topologicalSort(graph: IGraph): string[] {
 	}
 
 	if (Object.keys(outgoingEdgeCount).length > 0) {
-		throw new Error('Cannot do topological sort on cyclic graph, remaining nodes: ' + Object.keys(outgoingEdgeCount));
+		throw new Error('Невозможно выполнить топологическую сортировку на циклическом графе, оставшиеся узлы: ' + Object.keys(outgoingEdgeCount));
 	}
 
 	return L;

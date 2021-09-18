@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ * Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ *  Лицензировано в соответствии с лицензией MIT. 
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 'use strict';
@@ -18,7 +19,7 @@ shasum.update(fs.readFileSync(path.join(ROOT, 'build/.cachesalt')));
 shasum.update(fs.readFileSync(path.join(ROOT, '.yarnrc')));
 shasum.update(fs.readFileSync(path.join(ROOT, 'remote/.yarnrc')));
 
-// Add `package.json` and `yarn.lock` files
+// Добавление файлы package.json и yarn.lock .
 for (let dir of dirs) {
 	const packageJsonPath = path.join(ROOT, dir, 'package.json');
 	const packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString());
@@ -34,7 +35,7 @@ for (let dir of dirs) {
 	shasum.update(fs.readFileSync(yarnLockPath));
 }
 
-// Add any other command line arguments
+// Добавление любых других аргументов командной строки
 for (let i = 2; i < process.argv.length; i++) {
 	shasum.update(process.argv[i]);
 }

@@ -1,7 +1,8 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+  *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+  * Лицензировано в соответствии с лицензией MIT.
+  *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта..
  *--------------------------------------------------------------------------------------------*/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bundle = void 0;
@@ -9,7 +10,7 @@ const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 /**
- * Bundle `entryPoints` given config `config`.
+ * Связывание `entryPoints` в заданную конфигурацию `config`.
  */
 function bundle(entryPoints, config, callback) {
     const entryPointsMap = {};
@@ -165,7 +166,7 @@ function extractStrings(destFiles) {
         if (/\.nls\.js$/.test(destFile.dest)) {
             return;
         }
-        // Do one pass to record the usage counts for each module id
+        // Сделайте один проход, чтобы записать количество использований для каждого идентификатора модуля.
         const useCounts = {};
         destFile.sources.forEach((source) => {
             const matches = source.contents.match(/define\(("[^"]+"),\s*\[(((, )?("|')[^"']+("|'))+)\]/);
@@ -214,7 +215,7 @@ function extractStrings(destFiles) {
     return destFiles;
 }
 function removeDuplicateTSBoilerplate(destFiles) {
-    // Taken from typescript compiler => emitFiles
+    // Взято из компилятора typescript => emitFiles.
     const BOILERPLATE = [
         { start: /^var __extends/, end: /^}\)\(\);$/ },
         { start: /^var __assign/, end: /^};$/ },
@@ -336,7 +337,7 @@ function emitEntryPoint(modulesMap, deps, entryPoint, includedModules, prepend, 
 function readFileAndRemoveBOM(path) {
     const BOM_CHAR_CODE = 65279;
     let contents = fs.readFileSync(path, 'utf8');
-    // Remove BOM
+    // Удаление BOM.
     if (contents.charCodeAt(0) === BOM_CHAR_CODE) {
         contents = contents.substring(1);
     }
@@ -363,9 +364,9 @@ function emitPlugin(entryPoint, plugin, pluginName, moduleName) {
     };
 }
 function emitNamedModule(moduleId, defineCallPosition, path, contents) {
-    // `defineCallPosition` is the position in code: |define()
+    // `defineCallPosition` позиция в code: |define()
     const defineCallOffset = positionToOffset(contents, defineCallPosition.line, defineCallPosition.col);
-    // `parensOffset` is the position in code: define|()
+    // `parensOffset` позиция в code: define|()
     const parensOffset = contents.indexOf('(', defineCallOffset);
     const insertStr = '"' + moduleId + '", ';
     return {
@@ -382,7 +383,7 @@ function emitShimmedModule(moduleId, myDeps, factory, path, contents) {
     };
 }
 /**
- * Convert a position (line:col) to (offset) in string `str`
+ * Преобразование позиции  строка:столбец, в смещение, в строке `str`.
  */
 function positionToOffset(str, desiredLine, desiredCol) {
     if (desiredLine === 1) {
@@ -400,7 +401,7 @@ function positionToOffset(str, desiredLine, desiredCol) {
     return -1;
 }
 /**
- * Return a set of reachable nodes in `graph` starting from `rootNodes`
+ * Возвращение набора достижимых узлов в `graph`, начиная с`rootNodes`.
  */
 function visit(rootNodes, graph) {
     const result = {};
@@ -421,7 +422,7 @@ function visit(rootNodes, graph) {
     return result;
 }
 /**
- * Perform a topological sort on `graph`
+ * Выполнение топологической сортировки на `graph`.
  */
 function topologicalSort(graph) {
     const allNodes = {}, outgoingEdgeCount = {}, inverseEdges = {};
@@ -444,7 +445,7 @@ function topologicalSort(graph) {
         }
     });
     while (S.length > 0) {
-        // Ensure the exact same order all the time with the same inputs
+        // Обеспечение всегда одного и того же порядка с одинаковыми входными данными.
         S.sort();
         const n = S.shift();
         L.push(n);
@@ -458,7 +459,7 @@ function topologicalSort(graph) {
         });
     }
     if (Object.keys(outgoingEdgeCount).length > 0) {
-        throw new Error('Cannot do topological sort on cyclic graph, remaining nodes: ' + Object.keys(outgoingEdgeCount));
+		throw new Error('Невозможно выполнить топологическую сортировку на циклическом графе, оставшиеся узлы: ' + Object.keys(outgoingEdgeCount));
     }
     return L;
 }

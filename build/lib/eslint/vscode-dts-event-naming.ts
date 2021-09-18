@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 import * as eslint from 'eslint';
@@ -15,10 +16,10 @@ export = new class ApiEventNaming implements eslint.Rule.RuleModule {
 			url: 'https://github.com/microsoft/vscode/wiki/Extension-API-guidelines#event-naming'
 		},
 		messages: {
-			naming: 'Event names must follow this patten: `on[Did|Will]<Verb><Subject>`',
-			verb: 'Unknown verb \'{{verb}}\' - is this really a verb? Iff so, then add this verb to the configuration',
-			subject: 'Unknown subject \'{{subject}}\' - This subject has not been used before but it should refer to something in the API',
-			unknown: 'UNKNOWN event declaration, lint-rule needs tweaking'
+			naming: 'Названия событий должны соответствовать этому шаблону: `on[Did|Will]<Verb><Subject>`',
+			verb: 'Неизвестный глагол \'{{verb}}\' - это действительно глагол? Если это так, то добавьте этот глагол в конфигурацию.',
+			subject: 'Неизвестный суб-объект \'{{subject}}\' - Этот объект ранее не использовался, но он должен ссылаться на что-то в API.',
+			unknown: 'Объявление НЕИЗВЕСТНОГО события, lint-правило нуждается в настройке.'
 		}
 	};
 
@@ -35,7 +36,7 @@ export = new class ApiEventNaming implements eslint.Rule.RuleModule {
 				const ident = this.getIdent(def);
 
 				if (!ident) {
-					// event on unknown structure...
+					//  Событие на неизвестной структуре ...
 					return context.report({
 						node,
 						message: 'unknown'
@@ -43,7 +44,7 @@ export = new class ApiEventNaming implements eslint.Rule.RuleModule {
 				}
 
 				if (allowed.has(ident.name)) {
-					// configured exception
+					//Настроенное исключение.
 					return;
 				}
 
@@ -56,7 +57,7 @@ export = new class ApiEventNaming implements eslint.Rule.RuleModule {
 					return;
 				}
 
-				// check that <verb> is spelled out (configured) as verb
+				//  Убедитесь, что <verb> написан (настроен) как глагол.
 				if (!verbs.has(match[2].toLowerCase())) {
 					context.report({
 						node: ident,
@@ -65,7 +66,7 @@ export = new class ApiEventNaming implements eslint.Rule.RuleModule {
 					});
 				}
 
-				// check that a subject (if present) has occurred
+				// Проверка, возник ли объект (если есть).
 				if (match[3]) {
 					const regex = new RegExp(match[3], 'ig');
 					const parts = context.getSourceCode().getText().split(regex);

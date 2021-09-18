@@ -15,5 +15,5 @@ function Retry
 		}
 	}
 
-	throw "Max retries reached"
+	throw "ƒостигнуто максимальное количество попыток."
 }

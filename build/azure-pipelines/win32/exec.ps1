@@ -1,14 +1,13 @@
-# Taken from psake https://github.com/psake/psake
+# Взято у psake https://github.com/psake/psake
 
 <#
 .SYNOPSIS
-  This is a helper function that runs a scriptblock and checks the PS variable $lastexitcode
-  to see if an error occcured. If an error is detected then an exception is thrown.
-  This function allows you to run command-line programs without having to
-  explicitly check the $lastexitcode variable.
+  Это вспомогательная функция, которая запускает блок сценария и проверяет переменную PS $ lastexitcode, чтобы узнать, произошла ли ошибка.
+   Если обнаружена ошибка, выдается исключение.
+   Эта функция позволяет запускать программы командной строки без необходимости явно проверять переменную $ lastexitcode.
 
 .EXAMPLE
-  exec { svn info $repository_trunk } "Error executing SVN. Please verify SVN command-line client is installed"
+  exec { svn info $repository_trunk } "Ошибка при выполнении SVN. Убедитесь, что установлен клиент командной строки SVN"
 #>
 function Exec
 {

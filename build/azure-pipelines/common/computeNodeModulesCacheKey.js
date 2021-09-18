@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
  *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
- *  Лицензировано в соответствии с лицензией MIT. Смотрите в License.txt в корневом каталоге проекта,  
- * информацию о лицензии.
+ *  Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -14,7 +14,7 @@ const shasum = crypto.createHash('sha1');
 shasum.update(fs.readFileSync(path.join(ROOT, 'build/.cachesalt')));
 shasum.update(fs.readFileSync(path.join(ROOT, '.yarnrc')));
 shasum.update(fs.readFileSync(path.join(ROOT, 'remote/.yarnrc')));
-// Add `package.json` and `yarn.lock` files
+// Добавление файлов package.json и yarn.lock.
 for (let dir of dirs) {
     const packageJsonPath = path.join(ROOT, dir, 'package.json');
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString());
@@ -28,7 +28,7 @@ for (let dir of dirs) {
     const yarnLockPath = path.join(ROOT, dir, 'yarn.lock');
     shasum.update(fs.readFileSync(yarnLockPath));
 }
-// Add any other command line arguments
+// Добавление любых других аргументов командной строки.
 for (let i = 2; i < process.argv.length; i++) {
     shasum.update(process.argv[i]);
 }

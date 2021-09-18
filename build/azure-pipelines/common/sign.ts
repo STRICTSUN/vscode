@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ * Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ *  Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 import * as cp from 'child_process';
@@ -19,7 +20,7 @@ function getParams(type: string): string {
 		case 'darwin-notarize':
 			return '[{"keyCode":"CP-401337-Apple","operationSetCode":"MacAppNotarize","parameters":[{"parameterName":"BundleId","parameterValue":"$(BundleIdentifier)"}],"toolName":"sign","toolVersion":"1.0"}]';
 		default:
-			throw new Error(`Sign type ${type} not found`);
+			throw new Error(`Тип знака ${type} не найден.`);
 	}
 }
 

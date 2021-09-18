@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+  *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+  * Лицензировано в соответствии с лицензией MIT.
+  *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 import got from 'got';
@@ -59,11 +60,11 @@ async function downloadExtensionDetails(extension: IExtensionDefinition): Promis
 
 	// Validation
 	if (!results.find(r => r.fileName === 'package.json')?.body) {
-		// throw new Error(`The "package.json" file could not be found for the built-in extension - ${extensionLabel}`);
+		// throw new Error(`Не удалось найти файл package.json для встроенного расширения - ${extensionLabel}`);
 	}
 	if (!results.find(r => r.fileName === 'package-lock.json')?.body &&
 		!results.find(r => r.fileName === 'yarn.lock')?.body) {
-		// throw new Error(`The "package-lock.json"/"yarn.lock" could not be found for the built-in extension - ${extensionLabel}`);
+		// throw new Error(`Не удалось найти package-lock.json/yarn.lock для встроенного расширения - ${extensionLabel}`);
 	}
 }
 
@@ -74,10 +75,10 @@ async function main(): Promise<void> {
 }
 
 main().then(() => {
-	console.log(`Built-in extensions component data downloaded ${ansiColors.green('✔︎')}`);
+	console.log(`Загружены данные компонентов встроенных расширений ${ansiColors.green('✔︎')}`);
 	process.exit(0);
 }, err => {
-	console.log(`Built-in extensions component data could not be downloaded ${ansiColors.red('🛑')}`);
+	console.log(`Не удалось загрузить данные компонентов встроенных расширений ${ansiColors.red('🛑')}`);
 	console.error(err);
 	process.exit(1);
 });

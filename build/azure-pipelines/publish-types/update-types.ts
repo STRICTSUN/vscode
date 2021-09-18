@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 'use strict';
@@ -22,10 +23,10 @@ try {
 
 	updateDTSFile(outPath, tag);
 
-	console.log(`Done updating vscode.d.ts at ${outPath}`);
+	console.log(`Выполнено обновление vscode.d.ts в ${outPath}`);
 } catch (err) {
 	console.error(err);
-	console.error('Failed to update types');
+	console.error('Не удалось обновить типы.');
 	process.exit(1);
 }
 
@@ -51,8 +52,9 @@ function convertTabsToSpaces(str: string): string {
 function getNewFileContent(content: string, tag: string) {
 	const oldheader = [
 		`/*---------------------------------------------------------------------------------------------`,
-		` *  Copyright (c) Microsoft Corporation. All rights reserved.`,
-		` *  Licensed under the MIT License. See License.txt in the project root for license information.`,
+		` *  Авторское право (c) Корпорации Майкрософт. Все права защищены.`,
+		` *  Лицензировано в соответствии с лицензией MIT.`,
+		` *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта. `,
 		` *--------------------------------------------------------------------------------------------*/`
 	].join('\n');
 
@@ -64,20 +66,20 @@ function getNewFileHeader(tag: string) {
 	const shorttag = `${major}.${minor}`;
 
 	const header = [
-		`// Type definitions for Visual Studio Code ${shorttag}`,
-		`// Project: https://github.com/microsoft/vscode`,
-		`// Definitions by: Visual Studio Code Team, Microsoft <https://github.com/microsoft>`,
-		`// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped`,
+		`// Определения типов для  Студии Визуального Кода ${shorttag}`,
+		`// Проект: https://github.com/microsoft/vscode`,
+		`// Определения по: Visual Studio Code Team, Microsoft <https://github.com/microsoft>`,
+		`// Определения: https://github.com/DefinitelyTyped/DefinitelyTyped`,
 		``,
 		`/*---------------------------------------------------------------------------------------------`,
-		` *  Copyright (c) Microsoft Corporation. All rights reserved.`,
-		` *  Licensed under the MIT License.`,
-		` *  See https://github.com/microsoft/vscode/blob/main/LICENSE.txt for license information.`,
+		` *  Авторское право (c) Корпорации Майкрософт. Все права защищены.`,
+		` *  Лицензировано в соответствии с лицензией MIT.`,
+		` *  Информацию о лицензии смотрите в https://github.com/microsoft/vscode/blob/main/LICENSE.txt .`,
 		` *--------------------------------------------------------------------------------------------*/`,
 		``,
 		`/**`,
-		` * Type Definition for Visual Studio Code ${shorttag} Extension API`,
-		` * See https://code.visualstudio.com/api for more information`,
+		` * Определение типа API расширения для Студии Визуального Кода ${shorttag}/ `,
+		` * Подробности смотрите на https://code.visualstudio.com/api .`,
 		` */`
 	].join('\n');
 

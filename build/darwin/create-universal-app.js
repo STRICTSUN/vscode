@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -51,11 +52,11 @@ async function main() {
         LSRequiresNativeExecution: true
     });
     await fs.writeFile(infoPlistPath, plist.build(infoPlistJson), 'utf8');
-    // Verify if native module architecture is correct
+    // Проверка правильность архитектуры собственного модуля.
     const findOutput = await (0, cross_spawn_promise_1.spawn)('find', [outAppPath, '-name', 'keytar.node']);
     const lipoOutput = await (0, cross_spawn_promise_1.spawn)('lipo', ['-archs', findOutput.replace(/\n$/, "")]);
     if (lipoOutput.replace(/\n$/, "") !== 'x86_64 arm64') {
-        throw new Error(`Invalid arch, got : ${lipoOutput}`);
+		throw new Error(`Некорректный архив, получено : ${lipoOutput}`);
     }
 }
 if (require.main === module) {

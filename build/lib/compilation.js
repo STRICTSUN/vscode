@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+  * Лицензировано в соответствии с лицензией MIT.
+  *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -23,7 +24,7 @@ function getTypeScriptCompilerOptions(src) {
     let options = {};
     options.verbose = false;
     options.sourceMap = true;
-    if (process.env['VSCODE_NO_SOURCEMAP']) { // To be used by developers in a hurry
+	if (process.env['VSCODE_NO_SOURCEMAP']) { // Для спешащих разработчиков.
         options.sourceMap = false;
     }
     options.rootDir = rootDir;
@@ -49,7 +50,7 @@ function createCompile(src, build, emitError) {
         const input = es.through();
         const output = input
             .pipe(utf8Filter)
-            .pipe(bom()) // this is required to preserve BOM in test files that loose it otherwise
+			.pipe(bom()) // Это необходимо для сохранения спецификации в тестовых файлах, которые в противном случае потеряют её.
             .pipe(utf8Filter.restore)
             .pipe(tsFilter)
             .pipe(util.loadSourcemaps())
@@ -74,7 +75,7 @@ function createCompile(src, build, emitError) {
 function compileTask(src, out, build) {
     return function () {
         if (os.totalmem() < 4000000000) {
-            throw new Error('compilation requires 4GB of RAM');
+			throw new Error(' Для компиляции требуется 4 ГБ ОЗУ.');
         }
         const compile = createCompile(src, build, true);
         const srcPipe = gulp.src(`${src}/**`, { base: `${src}` });
@@ -149,8 +150,8 @@ class MonacoGenerator {
     _run() {
         let r = monacodts.run3(this._declarationResolver);
         if (!r && !this._isWatch) {
-            // The build must always be able to generate the monaco.d.ts
-            throw new Error(`monaco.d.ts generation error - Cannot continue`);
+            // Сборка всегда должна иметь возможность создавать monaco.d.ts .
+			throw new Error(`Ошибка создания файла monaco.d.ts - невозможно продолжить.`);
         }
         return r;
     }
@@ -161,7 +162,7 @@ class MonacoGenerator {
         const startTime = Date.now();
         const result = this._run();
         if (!result) {
-            // nothing really changed
+            // Ничего особо не изменилось.
             return;
         }
         if (result.isTheSame) {
@@ -169,9 +170,9 @@ class MonacoGenerator {
         }
         fs.writeFileSync(result.filePath, result.content);
         fs.writeFileSync(path.join(REPO_SRC_FOLDER, 'vs/editor/common/standalone/standaloneEnums.ts'), result.enums);
-        this._log(`monaco.d.ts is changed - total time took ${Date.now() - startTime} ms`);
+		this._log(`Изменён monaco.d.ts  - всего потребовалось  времени  ${Date.now() - startTime} мс.`);
         if (!this._isWatch) {
-            this.stream.emit('error', 'monaco.d.ts is no longer up to date. Please run gulp watch and commit the new file.');
+			this.stream.emit('error', 'monaco.d.ts больше не обновляется. Пожалуйста, запустите gulp watch и зафиксируйте новый файл.');
         }
     }
 }

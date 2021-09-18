@@ -1,7 +1,7 @@
-// Type definitions for Lazy.js 0.3.2
-// Project: https://github.com/dtao/lazy.js/
-// Definitions by: Bart van der Schoor <https://github.com/Bartvds>
-// Definitions: https://github.com/borisyankov/DefinitelyTyped
+// Определения типов для Lazy.js 0.3.2
+// Проект: https://github.com/dtao/lazy.js/
+// Определения по: Bart van der Schoor <https://github.com/Bartvds>
+// Определения: https://github.com/borisyankov/DefinitelyTyped
 
 declare function Lazy(value: string): Lazy.StringLikeSequence;
 declare function Lazy<T>(value: T[]): Lazy.ArrayLikeSequence<T>;
@@ -134,7 +134,7 @@ declare module Lazy {
 	}
 
 	interface SequenceBaser<T> {
-		// TODO improve define() (needs ugly overload)
+		// Задача улучшения define() - требуется уродливая перегрузка.
 		async(interval: number): AsyncSequence<T>;
 		chunk(size: number): Sequence<T>;
 		compact(): Sequence<T>;
@@ -159,7 +159,7 @@ declare module Lazy {
 		map<U>(mapFn: MapCallback<T, U[]>): ArraySequence<U>;
 		map<U>(mapFn: MapCallback<T, U>): Sequence<U>;
 
-		// TODO: vscode addition to workaround strict null errors
+		// ЧТО НУЖНО СДЕЛАТЬ: добавление vscode для обхода строгих ошибок null.
 		flatten(): Sequence<any>;
 
 		max(valueFn?: NumberCallback<T>): T;
@@ -220,7 +220,7 @@ declare module Lazy {
 
 	interface ObjectLikeSequence<T> extends Sequence<T> {
 		assign(other: Object): ObjectLikeSequence<T>;
-		// throws error
+		// Выдаёт ошибку.
 		//async(): X;
 		defaults(defaults: Object): ObjectLikeSequence<T>;
 		functions(): Sequence<T>;

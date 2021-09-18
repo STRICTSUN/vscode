@@ -1,7 +1,8 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ * Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ * Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.prepareIslFiles = exports.prepareI18nPackFiles = exports.prepareI18nFiles = exports.pullSetupXlfFiles = exports.findObsoleteResources = exports.pushXlfFiles = exports.createXlfFilesForIsl = exports.createXlfFilesForExtensions = exports.createXlfFilesForCoreBundle = exports.getResource = exports.processNlsFiles = exports.Limiter = exports.XLF = exports.Line = exports.externalExtensionsWithTranslations = exports.extraLanguages = exports.defaultLanguages = void 0;
@@ -31,13 +32,13 @@ exports.defaultLanguages = [
     { id: 'ru', folderName: 'rus' },
     { id: 'it', folderName: 'ita' }
 ];
-// languages requested by the community to non-stable builds
+// Языки, запрашиваемые сообществом для нестабильных сборок.
 exports.extraLanguages = [
     { id: 'pt-br', folderName: 'ptb' },
     { id: 'hu', folderName: 'hun' },
     { id: 'tr', folderName: 'trk' }
 ];
-// non built-in extensions also that are transifex and need to be part of the language packs
+// Не встроенные расширения, которые также являются transifex и должны быть частью языковых пакетов.
 exports.externalExtensionsWithTranslations = {
     'vscode-chrome-debug': 'msjsdiag.debugger-for-chrome',
     'vscode-node-debug': 'ms-vscode.node-debug',
@@ -125,11 +126,11 @@ class XLF {
     }
     addFile(original, keys, messages) {
         if (keys.length === 0) {
-            console.log('No keys in ' + original);
+			console.log('Нет ключей в ' + original);
             return;
         }
         if (keys.length !== messages.length) {
-            throw new Error(`Unmatching keys(${keys.length}) and messages(${messages.length}).`);
+            throw new Error(`Несовпадение ключей(${keys.length}) и сообщений(${messages.length}).`);
         }
         this.numberOfMessages += keys.length;
         this.files[original] = [];
@@ -158,7 +159,7 @@ class XLF {
     }
     addStringItem(file, item) {
         if (!item.id || item.message === undefined || item.message === null) {
-            throw new Error(`No item ID or value specified: ${JSON.stringify(item)}. File: ${file}`);
+			throw new Error(`Идентификатор или значение элемента не указаны: ${JSON.stringify(item)}. Файл: ${file}`);
         }
         if (item.message.length === 0) {
             log(`Item with id ${item.id} in file ${file} has an empty message.`);
@@ -215,20 +216,20 @@ XLF.parse = function (xlfString) {
         let files = [];
         parser.parseString(xlfString, function (err, result) {
             if (err) {
-                reject(new Error(`XLF parsing error: Failed to parse XLIFF string. ${err}`));
+				reject(new Error(`Ошибка синтаксического анализа XLF: Не удалось проанализировать строку XLIFF. ${err}`));
             }
             const fileNodes = result['xliff']['file'];
             if (!fileNodes) {
-                reject(new Error(`XLF parsing error: XLIFF file does not contain "xliff" or "file" node(s) required for parsing.`));
+				reject(new Error(`Ошибка синтаксического анализа XLF: файл XLIFF не содержит узлов "xliff" или "file", необходимых для синтаксического анализа.`));
             }
             fileNodes.forEach((file) => {
                 const originalFilePath = file.$.original;
                 if (!originalFilePath) {
-                    reject(new Error(`XLF parsing error: XLIFF file node does not contain original attribute to determine the original location of the resource file.`));
+					reject(new Error(`Ошибка синтаксического анализа XLF: узел файла XLIFF не содержит исходного атрибута для определения исходного местоположения файла ресурсов.`));
                 }
                 let language = file.$['target-language'];
                 if (!language) {
-                    reject(new Error(`XLF parsing error: XLIFF file node does not contain target-language attribute to determine translated language.`));
+					reject(new Error(`Ошибка синтаксического анализа XLF: узел файла XLIFF не содержит атрибут целевого языка для определения переведённого языка.`));
                 }
                 const messages = {};
                 const transUnits = file.body[0]['trans-unit'];
@@ -236,15 +237,15 @@ XLF.parse = function (xlfString) {
                     transUnits.forEach((unit) => {
                         const key = unit.$.id;
                         if (!unit.target) {
-                            return; // No translation available
+							return; // Перевод отсутствует.
                         }
                         let val = unit.target[0];
                         if (typeof val !== 'string') {
-                            // We allow empty source values so support them for translations as well.
+                            // Мы разрешаем пустые исходные значения, поэтому поддерживаем их и для переводов.
                             val = val._ ? val._ : '';
                         }
                         if (!key) {
-                            reject(new Error(`XLF parsing error: trans-unit ${JSON.stringify(unit, undefined, 0)} defined in file ${originalFilePath} is missing the ID attribute.`));
+							reject(new Error(`Ошибка синтаксического анализа XLF: в транс-блоке ${JSON.stringify(unit, undefined, 0)}, определённом в файле ${originalFilePath}, отсутствует атрибут ID.`));
                             return;
                         }
                         messages[key] = decodeEntities(val);
@@ -290,20 +291,20 @@ function sortLanguages(languages) {
 }
 function stripComments(content) {
     /**
-    * First capturing group matches double quoted string
-    * Second matches single quotes string
-    * Third matches block comments
-    * Fourth matches line comments
+    * Первый захват группы соответствует строке в двойной кавычке.
+    * Второй, соответствует строке одинарных кавычек.
+    * Третий, в совпадениях блокирует комментарии.
+    * Четвертый, в совпадениях - строки комментариев.
     */
     const regexp = /("(?:[^\\\"]*(?:\\.)?)*")|('(?:[^\\\']*(?:\\.)?)*')|(\/\*(?:\r?\n|.)*?\*\/)|(\/{2,}.*?(?:(?:\r?\n)|$))/g;
     let result = content.replace(regexp, (match, _m1, _m2, m3, m4) => {
-        // Only one of m1, m2, m3, m4 matches
+        // Только одно из совпадений m1, m2, m3, m4.
         if (m3) {
-            // A block comment. Replace with nothing
+            // Комментарий блока. Ничего не заменять.
             return '';
         }
         else if (m4) {
-            // A line comment. If it ends in \r?\n then keep it.
+            // Комментарий к строке. Если он заканчивается на \r?\n, то сохраните его.
             let length = m4.length;
             if (length > 2 && m4[length - 1] === '\n') {
                 return m4[length - 2] === '\r' ? '\r\n' : '\n';
@@ -313,7 +314,7 @@ function stripComments(content) {
             }
         }
         else {
-            // We match a string
+            // Мы сопоставляем строку.
             return match;
         }
     });
@@ -365,7 +366,7 @@ function processCoreBundleFormat(fileHeader, languages, json, emitter) {
         let keys = keysSection[module];
         let messages = messageSection[module];
         if (!messages || keys.length !== messages.length) {
-            emitter.emit('error', `Message for module ${module} corrupted. Mismatch in number of keys and messages.`);
+			emitter.emit('error', `Повреждено сообщение для модуля ${module}. Несоответствие по количеству ключей и сообщений.`);
             return;
         }
         let messageMap = Object.create(null);
@@ -381,13 +382,13 @@ function processCoreBundleFormat(fileHeader, languages, json, emitter) {
     });
     let languageDirectory = path.join(__dirname, '..', '..', '..', 'vscode-loc', 'i18n');
     if (!fs.existsSync(languageDirectory)) {
-        log(`No VS Code localization repository found. Looking at ${languageDirectory}`);
-        log(`To bundle translations please check out the vscode-loc repository as a sibling of the vscode repository.`);
+		log(`Не найден репозиторий локализации VS Code. Смотрите на ${languageDirectory}`);
+		log(`Чтобы объединить переводы, посетите репозиторий vscode-loc, который является родственником репозитория vscode.`);
     }
     let sortedLanguages = sortLanguages(languages);
     sortedLanguages.forEach((language) => {
         if (process.env['VSCODE_BUILD_VERBOSE']) {
-            log(`Generating nls bundles for: ${language.id}`);
+			log(`Создание пакетов nls для: ${language.id}`);
         }
         statistics[language.id] = 0;
         let localizedModules = Object.create(null);
@@ -406,7 +407,7 @@ function processCoreBundleFormat(fileHeader, languages, json, emitter) {
             }
             if (!moduleMessage) {
                 if (process.env['VSCODE_BUILD_VERBOSE']) {
-                    log(`No localized messages found for module ${module}. Using default messages.`);
+					log(`Не найдено локализованных сообщений для модуля ${module}. Использование сообщений по умолчанию.`);
                 }
                 moduleMessage = defaultMessages[module];
                 statistics[language.id] = statistics[language.id] + Object.keys(moduleMessage).length;
@@ -423,7 +424,7 @@ function processCoreBundleFormat(fileHeader, languages, json, emitter) {
                 let message = moduleMessage[key];
                 if (!message) {
                     if (process.env['VSCODE_BUILD_VERBOSE']) {
-                        log(`No localized message found for key ${key} in module ${module}. Using default message.`);
+						log(` Не найдено локализованное сообщение для ключа ${key} в модуле ${module}. Использование сообщения по умолчанию.`);
                     }
                     message = defaultMessages[module][key];
                     statistics[language.id] = statistics[language.id] + 1;
@@ -442,7 +443,7 @@ function processCoreBundleFormat(fileHeader, languages, json, emitter) {
                 contents.push(`\t"${module}": [`);
                 let messages = localizedModules[module];
                 if (!messages) {
-                    emitter.emit('error', `Didn't find messages for module ${module}.`);
+					emitter.emit('error', `Не найдены сообщения для модуля ${module}.`);
                     return;
                 }
                 messages.forEach((message, index) => {
@@ -456,12 +457,12 @@ function processCoreBundleFormat(fileHeader, languages, json, emitter) {
     });
     Object.keys(statistics).forEach(key => {
         let value = statistics[key];
-        log(`${key} has ${value} untranslated strings.`);
+		log(`${key} имеет непереведенные строки ${value}.`);
     });
     sortedLanguages.forEach(language => {
         let stats = statistics[language.id];
         if (Is.undef(stats)) {
-            log(`\tNo translations found for language ${language.id}. Using default language instead.`);
+			log(`\tНе найдены переводы для языка ${language.id}. Вместо этого используется язык по умолчанию.`);
         }
     });
 }
@@ -474,7 +475,7 @@ function processNlsFiles(opts) {
                 json = JSON.parse(file.contents.toString('utf8'));
             }
             else {
-                this.emit('error', `Failed to read component file: ${file.relative}`);
+				this.emit('error', `Не удалось прочитать файл компонента: ${file.relative}`);
                 return;
             }
             if (BundledFormat.is(json)) {
@@ -514,7 +515,7 @@ function getResource(sourceFile) {
     else if (/^vs\/workbench/.test(sourceFile)) {
         return { name: 'vs/workbench', project: workbenchProject };
     }
-    throw new Error(`Could not identify the XLF bundle for ${sourceFile}`);
+	throw new Error(`Не удалось определить пакет XLF для ${sourceFile}`);
 }
 exports.getResource = getResource;
 function createXlfFilesForCoreBundle() {
@@ -531,7 +532,7 @@ function createXlfFilesForCoreBundle() {
                     const keys = json.keys[coreModule];
                     const messages = json.messages[coreModule];
                     if (keys.length !== messages.length) {
-                        this.emit('error', `There is a mismatch between keys and messages in ${file.relative} for module ${coreModule}`);
+						this.emit('error', `Существует несоответствие между ключами и сообщениями в ${file.relative} для модуля ${coreModule}`);
                         return;
                     }
                     else {
@@ -554,12 +555,12 @@ function createXlfFilesForCoreBundle() {
                 }
             }
             else {
-                this.emit('error', new Error(`File ${file.relative} is not using a buffer content`));
+				this.emit('error', new Error(`Файл ${file.relative} не использует содержимое буфера.`));
                 return;
             }
         }
         else {
-            this.emit('error', new Error(`File ${file.relative} is not a core meta data file.`));
+			this.emit('error', new Error(`Файл ${file.relative} не является основным файлом метаданных.`));
             return;
         }
     });
@@ -603,7 +604,7 @@ function createXlfFilesForExtensions() {
                             return value.message;
                         }
                         else {
-                            return `Unknown message for key: ${key}`;
+							return `Неизвестное сообщение для ключа: ${key}`;
                         }
                     });
                     getXlf().addFile(`extensions/${extensionName}/package`, keys, messages);
@@ -617,7 +618,7 @@ function createXlfFilesForExtensions() {
                     }
                 }
                 else {
-                    this.emit('error', new Error(`${file.path} is not a valid extension nls file`));
+					this.emit('error', new Error(`${file.path} не является допустимым расширением файла nls.`));
                     return;
                 }
             }
@@ -653,7 +654,7 @@ function createXlfFilesForIsl() {
             resourceFile = 'messages.xlf';
         }
         else {
-            throw new Error(`Unknown input file ${file.path}`);
+			throw new Error(`Неизвестный входной файл ${file.path}`);
         }
         let xlf = new XLF(projectName), keys = [], messages = [];
         let model = new TextModel(file.contents.toString());
@@ -665,7 +666,7 @@ function createXlfFilesForIsl() {
             let firstChar = line.charAt(0);
             switch (firstChar) {
                 case ';':
-                    // Comment line;
+                    // Строка комментария;
                     return;
                 case '[':
                     inMessageSection = '[Messages]' === line || '[CustomMessages]' === line;
@@ -676,7 +677,7 @@ function createXlfFilesForIsl() {
             }
             let sections = line.split('=');
             if (sections.length !== 2) {
-                throw new Error(`Badly formatted message found: ${line}`);
+				throw new Error(`Обнаружено плохо отформатированное сообщение: ${line}`);
             }
             else {
                 let key = sections[0];
@@ -689,7 +690,7 @@ function createXlfFilesForIsl() {
         });
         const originalPath = file.path.substring(file.cwd.length + 1, file.path.split('.')[0].length).replace(/\\/g, '/');
         xlf.addFile(originalPath, keys, messages);
-        // Emit only upon all ISL files combined into single XLF instance
+        // Издаются только для всех файлов ISL, объединённых в один экземпляр XLF.
         const newFilePath = path.join(projectName, resourceFile);
         const xlfFile = new File({ path: newFilePath, contents: Buffer.from(xlf.toString(), 'utf-8') });
         this.queue(xlfFile);
@@ -704,7 +705,7 @@ function pushXlfFiles(apiHostname, username, password) {
         const fileName = path.basename(file.path);
         const slug = fileName.substr(0, fileName.length - '.xlf'.length);
         const credentials = `${username}:${password}`;
-        // Check if resource already exists, if not, then create it.
+        // Проверка существования ресурса, если нет, то создание его.
         let promise = tryGetResource(project, slug, apiHostname, credentials);
         tryGetPromises.push(promise);
         promise.then(exists => {
@@ -717,7 +718,7 @@ function pushXlfFiles(apiHostname, username, password) {
             updateCreatePromises.push(promise);
         });
     }, function () {
-        // End the pipe only after all the communication with Transifex API happened
+        // Завершить канал можно только после того, как произойдет вся связь с API Transifex.
         Promise.all(tryGetPromises).then(() => {
             Promise.all(updateCreatePromises).then(() => {
                 this.queue(null);
@@ -745,15 +746,15 @@ function getAllResources(project, apiHostname, username, password) {
                         resolve(json.map(o => o.slug));
                         return;
                     }
-                    reject(`Unexpected data format. Response code: ${res.statusCode}.`);
+					reject(`Неожиданный формат данных. Код ответа: ${res.statusCode}.`);
                 }
                 else {
-                    reject(`No resources in ${project} returned no data. Response code: ${res.statusCode}.`);
+					reject(`Никакие ресурсы в ${project} не вернули никаких данных. Код ответа: ${res.statusCode}.`);
                 }
             });
         });
         request.on('error', (err) => {
-            reject(`Failed to query resources in ${project} with the following error: ${err}. ${options.path}`);
+			reject(`Не удалось запросить ресурсы в ${project} со следующей ошибкой: ${err}. ${options.path}`);
         });
         request.end();
     });
@@ -783,8 +784,8 @@ function findObsoleteResources(apiHostname, username, password) {
             }
         }
         if (i18Resources.length !== extractedResources.length) {
-            console.log(`[i18n] Obsolete resources in file 'build/lib/i18n.resources.json': JSON.stringify(${i18Resources.filter(p => extractedResources.indexOf(p) === -1)})`);
-            console.log(`[i18n] Missing resources in file 'build/lib/i18n.resources.json': JSON.stringify(${extractedResources.filter(p => i18Resources.indexOf(p) === -1)})`);
+			console.log(`[i18n] Устаревшие ресурсы в файле 'build/lib/i18n.resources.json': JSON.stringify(${i18Resources.filter(p => extractedResources.indexOf(p) === -1)})`);
+			console.log(`[i18n] Отсутствуют ресурсы в файле 'build/lib/i18n.resources.json': JSON.stringify(${extractedResources.filter(p => i18Resources.indexOf(p) === -1)})`);
         }
         let promises = [];
         for (let project in resourcesByProject) {
@@ -792,7 +793,7 @@ function findObsoleteResources(apiHostname, username, password) {
                 let expectedResources = resourcesByProject[project];
                 let unusedResources = resources.filter(resource => resource && expectedResources.indexOf(resource) === -1);
                 if (unusedResources.length) {
-                    console.log(`[transifex] Obsolete resources in project '${project}': ${unusedResources.join(', ')}`);
+					console.log(`[transifex] Устаревшие ресурсы в проекте '${project}': ${unusedResources.join(', ')}`);
                 }
             }));
         }
@@ -818,11 +819,11 @@ function tryGetResource(project, slug, apiHostname, credentials) {
                 resolve(true);
             }
             else {
-                reject(`Failed to query resource ${project}/${slug}. Response: ${response.statusCode} ${response.statusMessage}`);
+				reject(`Не удалось запросить ресурс ${project}/${slug}. Ответ: ${response.statusCode} ${response.statusMessage}`);
             }
         });
         request.on('error', (err) => {
-            reject(`Failed to get ${project}/${slug} on Transifex: ${err}`);
+			reject(`Не удалось получить ${project}/${slug} на Transifex: ${err}`);
         });
         request.end();
     });
@@ -847,21 +848,21 @@ function createResource(project, slug, xlfFile, apiHostname, credentials) {
         };
         let request = https.request(options, (res) => {
             if (res.statusCode === 201) {
-                log(`Resource ${project}/${slug} successfully created on Transifex.`);
+				log(`Ресурс ${project}/${slug} успешно создан на Transifex.`);
             }
             else {
-                reject(`Something went wrong in the request creating ${slug} in ${project}. ${res.statusCode}`);
+				reject(`Что-то пошло не так при создании запроса ${slug} в ${project}. ${res.statusCode}`);
             }
         });
         request.on('error', (err) => {
-            reject(`Failed to create ${project}/${slug} on Transifex: ${err}`);
+			reject(`Не удалось создать ${project}/${slug} на Transifex: ${err}`);
         });
         request.write(data);
         request.end();
     });
 }
 /**
- * The following link provides information about how Transifex handles updates of a resource file:
+ * Следующая ссылка содержит сведения о том, как Transifex обрабатывает обновления файла ресурсов:
  * https://dev.befoolish.co/tx-docs/public/projects/updating-content#what-happens-when-you-update-files
  */
 function updateResource(project, slug, xlfFile, apiHostname, credentials) {
@@ -886,16 +887,16 @@ function updateResource(project, slug, xlfFile, apiHostname, credentials) {
                 });
                 res.on('end', () => {
                     const response = JSON.parse(responseBuffer);
-                    log(`Resource ${project}/${slug} successfully updated on Transifex. Strings added: ${response.strings_added}, updated: ${response.strings_added}, deleted: ${response.strings_added}`);
+					log(`Ресурс ${project}/${slug} успешно обновлен на Transifex. Добавлены строки: ${response.strings_added}, updated: ${response.strings_added}, deleted: ${response.strings_added}`);
                     resolve();
                 });
             }
             else {
-                reject(`Something went wrong in the request updating ${slug} in ${project}. ${res.statusCode}`);
+				reject(`Что-то пошло не так при обновлении запроса ${slug} в ${project}. ${res.statusCode}`);
             }
         });
         request.on('error', (err) => {
-            reject(`Failed to update ${project}/${slug} on Transifex: ${err}`);
+			reject(`Не удалось обновить ${project}/${slug} на Transifex: ${err}`);
         });
         request.write(data);
         request.end();
@@ -914,7 +915,7 @@ function pullXlfFiles(apiHostname, username, password, language, resources) {
     let expectedTranslationsCount = resources.length;
     let translationsRetrieved = 0, called = false;
     return (0, event_stream_1.readable)(function (_count, callback) {
-        // Mark end of stream when all resources were retrieved
+        // Отметка окончания потока, когда были извлечены все ресурсы.
         if (translationsRetrieved === expectedTranslationsCount) {
             return this.emit('end');
         }
@@ -955,16 +956,16 @@ function retrieveResource(language, resource, apiHostname, credentials) {
                     resolve(new File({ contents: Buffer.concat(xlfBuffer), path: `${project}/${slug}.xlf` }));
                 }
                 else if (res.statusCode === 404) {
-                    console.log(`[transifex] ${slug} in ${project} returned no data.`);
+					console.log(`[transifex] ${slug} в ${project} не вернул никаких данных.`);
                     resolve(null);
                 }
                 else {
-                    reject(`${slug} in ${project} returned no data. Response code: ${res.statusCode}.`);
+					reject(`${slug} в ${project} не вернул никаких данных. Код ответа: ${res.statusCode}.`);
                 }
             });
         });
         request.on('error', (err) => {
-            reject(`Failed to query resource ${slug} with the following error: ${err}. ${options.path}`);
+			reject(`Не удалось запросить ресурс ${slug} со следующей ошибкой: ${err}. ${options.path}`);
         });
         request.end();
     }));
@@ -995,7 +996,7 @@ function createI18nFile(originalFilePath, messages) {
         'Copyright (c) Microsoft Corporation. All rights reserved.',
         'Licensed under the MIT License. See License.txt in the project root for license information.',
         '--------------------------------------------------------------------------------------------',
-        'Do not edit this file. It is machine generated.'
+        'Не редактируйте этот файл. Он создаётся машиной.'
     ];
     for (let key of Object.keys(messages)) {
         result[key] = messages[key];

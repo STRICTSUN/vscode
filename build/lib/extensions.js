@@ -1,7 +1,8 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ * Авторское право (c) Корпорации Майкрософт. Все права защищены.
+ * Лицензировано в соответствии с лицензией MIT.
+ *  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildExtensionMedia = exports.webpackExtensions = exports.translatePackageJSON = exports.scanBuiltinExtensions = exports.packageMarketplaceExtensionsStream = exports.packageLocalExtensionsStream = exports.fromMarketplace = void 0;
@@ -36,7 +37,7 @@ function minifyExtensionResources(input) {
         const errors = [];
         const value = jsoncParser.parse(f.contents.toString('utf8'), errors);
         if (errors.length === 0) {
-            // file parsed OK => just stringify to drop whitespace and comments
+            // Файл проанализирован ОК => просто преобразование в строку, чтобы удалить пробелы и комментарии.
             f.contents = Buffer.from(JSON.stringify(value));
         }
         return f;
@@ -98,8 +99,7 @@ function fromLocalWebpack(extensionPath, webpackConfigFileName) {
             base: extensionPath,
             contents: fs.createReadStream(filePath)
         }));
-        // check for a webpack configuration files, then invoke webpack
-        // and merge its output with the files stream.
+        // Проверка файлов конфигурации веб-пакета, затем вызов веб-пакета и объединение его вывода с потоком файлов.
         const webpackConfigLocations = glob.sync(path.join(extensionPath, '**', webpackConfigFileName), { ignore: ['**/node_modules'] });
         const webpackStreams = webpackConfigLocations.map(webpackConfigPath => {
             const webpackDone = (err, stats) => {
@@ -124,9 +124,9 @@ function fromLocalWebpack(extensionPath, webpackConfigFileName) {
                 this.emit('data', data);
             }))
                 .pipe(es.through(function (data) {
-                // source map handling:
-                // * rewrite sourceMappingURL
-                // * save to disk so that upload-task picks this up
+                // Обработка исходной карты:
+                // * переписать sourceMappingURL
+                // * сохранить на диск, чтобы задача загрузки подхватила это.
                 const contents = data.contents.toString('utf8');
                 data.contents = Buffer.from(contents.replace(/\n\/\/# sourceMappingURL=(.*)$/gm, function (_m, g1) {
                     return `\n//# sourceMappingURL=${sourceMappingURLBase}/extensions/${path.basename(extensionPath)}/${relativeOutputPath}/${g1}`;
@@ -176,7 +176,7 @@ function fromMarketplace(extensionName, version, metadata) {
     const json = require('gulp-json-editor');
     const [publisher, name] = extensionName.split('.');
     const url = `https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${publisher}/vsextensions/${name}/${version}/vspackage`;
-    fancyLog('Downloading extension:', ansiColors.yellow(`${extensionName}@${version}`), '...');
+	fancyLog('Скачивание расширения:', ansiColors.yellow(`${extensionName}@${version}`), '...');
     const options = {
         base: url,
         requestOptions: {
@@ -215,7 +215,7 @@ const productJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../../produ
 const builtInExtensions = productJson.builtInExtensions || [];
 const webBuiltInExtensions = productJson.webBuiltInExtensions || [];
 /**
- * Loosely based on `getExtensionKind` from `src/vs/workbench/services/extensions/common/extensionManifestPropertiesService.ts`
+ * Свободно основано на getExtensionKind из `src/vs/workbench/services/extensions/common/extensionManifestPropertiesService.ts`
  */
 function isWebExtension(manifest) {
     if (Boolean(manifest.browser)) {
@@ -224,7 +224,7 @@ function isWebExtension(manifest) {
     if (Boolean(manifest.main)) {
         return false;
     }
-    // neither browser nor main
+    // Ни в браузере, ни в главном.
     if (typeof manifest.extensionKind !== 'undefined') {
         const extensionKind = Array.isArray(manifest.extensionKind) ? manifest.extensionKind : [manifest.extensionKind];
         if (extensionKind.indexOf('web') >= 0) {
@@ -260,7 +260,7 @@ function packageLocalExtensionsStream(forWeb) {
         result = localExtensionsStream;
     }
     else {
-        // also include shared production node modules
+        // Также включение модулей общих производственных узлов.
         const productionDependencies = (0, dependencies_1.getProductionDependencies)('extensions/');
         const dependenciesSrc = _.flatten(productionDependencies.map(d => path.relative(root, d.path)).map(d => [`${d}/**`, `!${d}/**/{test,tests}/**`]));
         result = es.merge(localExtensionsStream, gulp.src(dependenciesSrc, { base: '.' }));
@@ -350,12 +350,12 @@ function translatePackageJSON(packageJSON, packageNLSPath) {
 }
 exports.translatePackageJSON = translatePackageJSON;
 const extensionsPath = path.join(root, 'extensions');
-// Additional projects to webpack. These typically build code for webviews
+// Дополнительные проекты для webpack. Они обычно создают код для веб-просмотров.
 const webpackMediaConfigFiles = [
     'markdown-language-features/webpack.config.js',
     'simple-browser/webpack.config.js',
 ];
-// Additional projects to run esbuild on. These typically build code for webviews
+// Дополнительные проекты для запуска esbuild. Они обычно создают код для веб-просмотров.
 const esbuildMediaScripts = [
     'markdown-language-features/esbuild.js',
     'markdown-math/esbuild.js',
@@ -432,7 +432,7 @@ exports.webpackExtensions = webpackExtensions;
 async function esbuildExtensions(taskName, isWatch, scripts) {
     function reporter(stdError, script) {
         const matches = (stdError || '').match(/\> (.+): error: (.+)?/g);
-        fancyLog(`Finished ${ansiColors.green(taskName)} ${script} with ${matches ? matches.length : 0} errors.`);
+        fancyLog(`Завершение ${ansiColors.green(taskName)} ${script} with ${matches ? matches.length : 0} с ошибками.`);
         for (const match of matches || []) {
             fancyLog.error(match);
         }

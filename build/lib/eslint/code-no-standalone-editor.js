@@ -1,7 +1,8 @@
 "use strict";
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+  *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 const path_1 = require("path");
 const utils_1 = require("./utils");
@@ -9,7 +10,7 @@ module.exports = new class NoNlsInStandaloneEditorRule {
     constructor() {
         this.meta = {
             messages: {
-                badImport: 'Not allowed to import standalone editor modules.'
+				badImport: 'Не разрешено импортировать автономные модули редактора.'
             },
             docs: {
                 url: 'https://github.com/microsoft/vscode/wiki/Source-Code-Organization'
@@ -18,11 +19,11 @@ module.exports = new class NoNlsInStandaloneEditorRule {
     }
     create(context) {
         if (/vs(\/|\\)editor/.test(context.getFilename())) {
-            // the vs/editor folder is allowed to use the standalone editor
+            // В папке vs/editor разрешено использовать автономный редактор.
             return {};
         }
         return (0, utils_1.createImportRuleListener)((node, path) => {
-            // resolve relative paths
+            // Разрешить относительные пути.
             if (path[0] === '.') {
                 path = (0, path_1.join)(context.getFilename(), path);
             }

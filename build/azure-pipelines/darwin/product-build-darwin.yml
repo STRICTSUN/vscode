@@ -4,7 +4,7 @@ steps:
       versionSpec: "14.x"
 
   - task: AzureKeyVault@1
-    displayName: "Azure Key Vault: Get Secrets"
+    displayName: "Хранилище ключей Azure: Получение ключей."
     inputs:
       azureSubscription: "vscode-builds-subscription"
       KeyVaultName: vscode
@@ -14,17 +14,16 @@ steps:
     inputs:
       artifact: Compilation
       path: $(Build.ArtifactStagingDirectory)
-    displayName: Download compilation output
+    displayName: Загрузка результатов компиляции.
     condition: and(succeeded(), ne(variables['VSCODE_ARCH'], 'universal'))
 
   - script: |
       set -e
       tar -xzf $(Build.ArtifactStagingDirectory)/compilation.tar.gz
-    displayName: Extract compilation output
+    displayName: Извлечение вывода компиляции.
     condition: and(succeeded(), ne(variables['VSCODE_ARCH'], 'universal'))
 
-  # Set up the credentials to retrieve distro repo and setup git persona
-  # to create a merge commit for when we merge distro into oss
+  # Настройка учётных данных для получения репо distro и настройка git persona для создания коммита слияния, когда мы будем объединять distro в oss.
   - script: |
       set -e
       cat << EOF > ~/.netrc
@@ -35,42 +34,42 @@ steps:
 
       git config user.email "vscode@microsoft.com"
       git config user.name "VSCode"
-    displayName: Prepare tooling
+    displayName: Подготовка оснастки.
 
   - script: |
       set -e
       sudo xcode-select -s /Applications/Xcode_12.2.app
-    displayName: Switch to Xcode 12
+    displayName: Переключение на Xcode 12
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'arm64'))
 
   - script: |
       set -e
       git pull --no-rebase https://github.com/$(VSCODE_MIXIN_REPO).git $(node -p "require('./package.json').distro")
-    displayName: Merge distro
+    displayName: Слияние distro.
 
   - script: |
       mkdir -p .build
       node build/azure-pipelines/common/computeNodeModulesCacheKey.js $VSCODE_ARCH $ENABLE_TERRAPIN > .build/yarnlockhash
-    displayName: Prepare yarn cache flags
+    displayName: Подготовка кэша flags для yarn.
 
   - task: Cache@2
     inputs:
       key: "nodeModules | $(Agent.OS) | .build/yarnlockhash"
       path: .build/node_modules_cache
       cacheHitVar: NODE_MODULES_RESTORED
-    displayName: Restore node_modules cache
+    displayName: Восстановление кэша node_modules.
 
   - script: |
       set -e
       tar -xzf .build/node_modules_cache/cache.tgz
     condition: and(succeeded(), eq(variables.NODE_MODULES_RESTORED, 'true'))
-    displayName: Extract node_modules cache
+    displayName: Извлечение кэша node_modules.
 
   - script: |
       set -e
       npm install -g node-gyp@latest
       node-gyp --version
-    displayName: Update node-gyp
+    displayName: Обновление node-gyp.
     condition: and(succeeded(), ne(variables.NODE_MODULES_RESTORED, 'true'))
 
   - script: |
@@ -78,7 +77,7 @@ steps:
       npx https://aka.ms/enablesecurefeed standAlone
     timeoutInMinutes: 5
     condition: and(succeeded(), ne(variables.NODE_MODULES_RESTORED, 'true'), eq(variables['ENABLE_TERRAPIN'], 'true'))
-    displayName: Switch to Terrapin packages
+    displayName: Переключиться на пакеты Terrapin.
 
   - script: |
       set -e
@@ -87,19 +86,19 @@ steps:
       export npm_config_build_from_source=true
       export SDKROOT=/Applications/Xcode_12.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk
 
-      for i in {1..3}; do # try 3 times, for Terrapin
+      for i in {1..3}; do # 3 раза, для Terrapin.
         yarn --frozen-lockfile && break
         if [ $i -eq 3 ]; then
-          echo "Yarn failed too many times" >&2
+          echo "Yarn слишком часто терпел неудачи." >&2
           exit 1
         fi
-        echo "Yarn failed $i, trying again..."
+        echo "Отказ Yarn $i, повтортте позже ..."
       done
     env:
       ELECTRON_SKIP_BINARY_DOWNLOAD: 1
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
       GITHUB_TOKEN: "$(github-distro-mixin-password)"
-    displayName: Install dependencies
+    displayName: Установка зависимостей.
     condition: and(succeeded(), ne(variables.NODE_MODULES_RESTORED, 'true'))
 
   - script: |
@@ -108,19 +107,19 @@ steps:
       mkdir -p .build/node_modules_cache
       tar -czf .build/node_modules_cache/cache.tgz --files-from .build/node_modules_list.txt
     condition: and(succeeded(), ne(variables.NODE_MODULES_RESTORED, 'true'))
-    displayName: Create node_modules archive
+    displayName: Создание архива node_modules.
 
-  # This script brings in the right resources (images, icons, etc) based on the quality (insiders, stable, exploration)
+  # Этот сценарий добавляет нужные ресурсы - изображения, значки и так далее. В зависимости от качества - инсайдеры, стабильная версия, исследование.
   - script: |
       set -e
       node build/azure-pipelines/mixin
-    displayName: Mix in quality
+    displayName: Смешивание по качеству.
 
   - script: |
       set -e
       VSCODE_MIXIN_PASSWORD="$(github-distro-mixin-password)" \
         yarn gulp vscode-darwin-$(VSCODE_ARCH)-min-ci
-    displayName: Build client
+    displayName: Сборка клиента.
     condition: and(succeeded(), ne(variables['VSCODE_ARCH'], 'universal'))
 
   - script: |
@@ -129,24 +128,24 @@ steps:
         yarn gulp vscode-reh-darwin-min-ci
       VSCODE_MIXIN_PASSWORD="$(github-distro-mixin-password)" \
         yarn gulp vscode-reh-web-darwin-min-ci
-    displayName: Build Server
+    displayName: Сборка сервера.
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'))
 
   - script: |
       set -e
       VSCODE_MIXIN_PASSWORD="$(github-distro-mixin-password)" \
         yarn npm-run-all -lp "electron $(VSCODE_ARCH)" "playwright-install"
-    displayName: Download Electron and Playwright
+    displayName: Загрузка Electron и Playwright.
     condition: and(succeeded(), ne(variables['VSCODE_ARCH'], 'universal'), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
 
   - download: current
     artifact: unsigned_vscode_client_darwin_x64_archive
-    displayName: Download x64 artifact
+    displayName: Загрузка артефакта x64.
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'universal'))
 
   - download: current
     artifact: unsigned_vscode_client_darwin_arm64_archive
-    displayName: Download arm64 artifact
+    displayName: Загрузка артефакта arm64.
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'universal'))
 
   - script: |
@@ -156,12 +155,12 @@ steps:
       unzip $(agent.builddirectory)/VSCode-darwin-x64.zip -d $(agent.builddirectory)/VSCode-darwin-x64
       unzip $(agent.builddirectory)/VSCode-darwin-arm64.zip -d $(agent.builddirectory)/VSCode-darwin-arm64
       DEBUG=* node build/darwin/create-universal-app.js
-    displayName: Create Universal App
+    displayName: Создание Универсального приложения.
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'universal'))
 
-  # Setting hardened entitlements is a requirement for:
-  # * Apple notarization
-  # * Running tests on Big Sur (because Big Sur has additional security precautions)
+  # Установление жестких прав является обязательным условием:
+  # * Нотариальное заверение Apple.
+  # * Запуск тестов на Big Sur, потому что Big Sur имеет дополнительные меры безопасности.
   - script: |
       set -e
       security create-keychain -p pwd $(agent.tempdirectory)/buildagent.keychain
@@ -171,33 +170,31 @@ steps:
       security import $(agent.tempdirectory)/cert.p12 -k $(agent.tempdirectory)/buildagent.keychain -P "$(macos-developer-certificate-key)" -T /usr/bin/codesign
       security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k pwd $(agent.tempdirectory)/buildagent.keychain
       VSCODE_ARCH=$(VSCODE_ARCH) DEBUG=electron-osx-sign* node build/darwin/sign.js
-    displayName: Set Hardened Entitlements
+    displayName: Установка жёстких прав доступа.
 
   - script: |
       set -e
       ./scripts/test.sh --build --tfs "Unit Tests"
-    displayName: Run unit tests (Electron)
+    displayName: Запуск модульных тестов - Electron.
     timeoutInMinutes: 7
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
 
   - script: |
       set -e
       yarn test-browser --build --browser chromium --browser webkit --browser firefox --tfs "Browser Unit Tests"
-    displayName: Run unit tests (Browser)
+    displayName: Запуск модульных тестов - Браузер.
     timeoutInMinutes: 7
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
 
   - script: |
-      # Figure out the full absolute path of the product we just built
-      # including the remote server and configure the integration tests
-      # to run with these builds instead of running out of sources.
+      # Определение полного абсолютного пути к продукту, который мы только что собрали, включая удалённый сервер и настройка интеграционных тестов для запуска с этими сборками вместо запуска из исходных текстов.
       set -e
       APP_ROOT=$(agent.builddirectory)/VSCode-darwin-$(VSCODE_ARCH)
       APP_NAME="`ls $APP_ROOT | head -n 1`"
       INTEGRATION_TEST_ELECTRON_PATH="$APP_ROOT/$APP_NAME/Contents/MacOS/Electron" \
       VSCODE_REMOTE_SERVER_PATH="$(agent.builddirectory)/vscode-reh-darwin" \
       ./scripts/test-integration.sh --build --tfs "Integration Tests"
-    displayName: Run integration tests (Electron)
+    displayName: Запуск интеграционных тестов - Electron.
     timeoutInMinutes: 10
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
 
@@ -205,7 +202,7 @@ steps:
       set -e
       VSCODE_REMOTE_SERVER_PATH="$(agent.builddirectory)/vscode-reh-web-darwin" \
       ./resources/server/test/test-web-integration.sh --browser webkit
-    displayName: Run integration tests (Browser)
+    displayName:  Запуск интеграционных тестов - Browser.
     timeoutInMinutes: 10
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
 
@@ -216,7 +213,7 @@ steps:
       INTEGRATION_TEST_ELECTRON_PATH="$APP_ROOT/$APP_NAME/Contents/MacOS/Electron" \
       VSCODE_REMOTE_SERVER_PATH="$(agent.builddirectory)/vscode-reh-darwin" \
       ./resources/server/test/test-remote-integration.sh
-    displayName: Run remote integration tests (Electron)
+    displayName: Запуск удалённых интеграционных тестов - Electron.
     timeoutInMinutes: 7
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
 
@@ -226,7 +223,7 @@ steps:
       APP_NAME="`ls $APP_ROOT | head -n 1`"
       yarn smoketest-no-compile --build "$APP_ROOT/$APP_NAME" --screenshots $(Build.SourcesDirectory)/.build/logs/smoke-tests
     timeoutInMinutes: 5
-    displayName: Run smoke tests (Electron)
+    displayName: Проведение smoke тестов - Electron.
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
 
   - script: |
@@ -236,7 +233,7 @@ steps:
       VSCODE_REMOTE_SERVER_PATH="$(agent.builddirectory)/vscode-reh-darwin" \
       yarn smoketest-no-compile --build "$APP_ROOT/$APP_NAME" --remote --screenshots $(Build.SourcesDirectory)/.build/logs/smoke-tests
     timeoutInMinutes: 5
-    displayName: Run smoke tests (Remote)
+    displayName: Запуск тестов smoke - удалённо.
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
 
   - script: |
@@ -244,14 +241,14 @@ steps:
       VSCODE_REMOTE_SERVER_PATH="$(agent.builddirectory)/vscode-reh-web-darwin" \
       yarn smoketest-no-compile --web --headless
     timeoutInMinutes: 5
-    displayName: Run smoke tests (Browser)
+    displayName: Запуск тестов smoke - Browser.
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
 
   - task: PublishPipelineArtifact@0
     inputs:
       artifactName: crash-dump-macos-$(VSCODE_ARCH)
       targetPath: .build/crashes
-    displayName: "Publish Crash Reports"
+    displayName: "Публикация отчетов о сбоях"
     continueOnError: true
     condition: failed()
 
@@ -259,12 +256,12 @@ steps:
     inputs:
       artifactName: logs-macos-$(VSCODE_ARCH)-$(System.JobAttempt)
       targetPath: .build/logs
-    displayName: "Publish Log Files"
+    displayName: "Публикация файлов журнала."
     continueOnError: true
     condition: and(succeededOrFailed(), eq(variables['VSCODE_ARCH'], 'x64'), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
 
   - task: PublishTestResults@2
-    displayName: Publish Tests Results
+    displayName: Публикация результатов тестов
     inputs:
       testResultsFiles: "*-results.xml"
       searchFolder: "$(Build.ArtifactStagingDirectory)/test-results"
@@ -273,39 +270,39 @@ steps:
   - script: |
       set -e
       pushd $(agent.builddirectory)/VSCode-darwin-$(VSCODE_ARCH) && zip -r -X -y $(agent.builddirectory)/VSCode-darwin-$(VSCODE_ARCH).zip * && popd
-    displayName: Archive build
+    displayName: Архив сборки.
     condition: and(succeeded(), ne(variables['VSCODE_PUBLISH'], 'false'))
 
   - script: |
       set -e
 
-      # package Remote Extension Host
+      # Пакет Remote Extension Host.
       pushd .. && mv vscode-reh-darwin vscode-server-darwin && zip -Xry vscode-server-darwin.zip vscode-server-darwin && popd
 
-      # package Remote Extension Host (Web)
+      # Пакет Remote Extension Host (Web).
       pushd .. && mv vscode-reh-web-darwin vscode-server-darwin-web && zip -Xry vscode-server-darwin-web.zip vscode-server-darwin-web && popd
-    displayName: Prepare to publish servers
+    displayName: Подготовка к публикации серверов.
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), ne(variables['VSCODE_PUBLISH'], 'false'))
 
   - publish: $(Agent.BuildDirectory)/VSCode-darwin-$(VSCODE_ARCH).zip
     artifact: unsigned_vscode_client_darwin_$(VSCODE_ARCH)_archive
-    displayName: Publish client archive
+    displayName: Публикация архива клиента.
     condition: and(succeeded(), ne(variables['VSCODE_PUBLISH'], 'false'))
 
   - publish: $(Agent.BuildDirectory)/vscode-server-darwin.zip
     artifact: vscode_server_darwin_$(VSCODE_ARCH)_archive-unsigned
-    displayName: Publish server archive
+    displayName: Публикация архива сервера.
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), ne(variables['VSCODE_PUBLISH'], 'false'))
 
   - publish: $(Agent.BuildDirectory)/vscode-server-darwin-web.zip
     artifact: vscode_web_darwin_$(VSCODE_ARCH)_archive-unsigned
-    displayName: Publish web server archive
+    displayName: Публикация архива веб-сервера.
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), ne(variables['VSCODE_PUBLISH'], 'false'))
 
   - script: |
       AZURE_STORAGE_ACCESS_KEY="$(ticino-storage-key)" \
       VSCODE_ARCH="$(VSCODE_ARCH)" \
       yarn gulp upload-vscode-configuration
-    displayName: Upload configuration (for Bing settings search)
+    displayName: Загрузка конфигурации, для поиска настроек Bing.
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), ne(variables['VSCODE_PUBLISH'], 'false'))
     continueOnError: true

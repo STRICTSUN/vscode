@@ -1,6 +1,7 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Авторское право (c) Корпорации Майкрософт. Все права защищены.
+* Лицензировано в соответствии с лицензией MIT.
+*  Информацию о лицензии смотрите в License.txt, в корневом каталоге проекта.
  *--------------------------------------------------------------------------------------------*/
 
 'use strict';
@@ -39,7 +40,7 @@ async function main() {
 			'Credits.rtf',
 			'CodeResources',
 			'fsevents.node',
-			'Info.plist', // TODO@deepak1556: regressed with 11.4.2 internal builds
+			'Info.plist', // TODO@deepak1556:регрессия с 11.4.2 внутренней сборки.
 			'.npmrc'
 		],
 		outAppPath,
@@ -59,11 +60,11 @@ async function main() {
 	});
 	await fs.writeFile(infoPlistPath, plist.build(infoPlistJson), 'utf8');
 
-	// Verify if native module architecture is correct
+	// Проверка правильности архитектуры собственного модуля.
 	const findOutput = await spawn('find', [outAppPath, '-name', 'keytar.node'])
 	const lipoOutput = await spawn('lipo', ['-archs', findOutput.replace(/\n$/, "")]);
 	if (lipoOutput.replace(/\n$/, "") !== 'x86_64 arm64') {
-		throw new Error(`Invalid arch, got : ${lipoOutput}`)
+		throw new Error(`Некорректный архив, получено : ${lipoOutput}`)
 	}
 }
 
